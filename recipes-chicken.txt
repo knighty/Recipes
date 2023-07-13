@@ -1,0 +1,194 @@
+-- Info
+name: Chicken Korma
+meat: Chicken
+tags: Curry, Indian
+difficulty: 3
+intensity: 1
+serves: 3
+duration: 40 minutes
+calories: 450
+description: A really rich and creamy chicken korma recipe with tender chicken breast pieces in a mildly spiced curry sauce. You could use chicken thigh fillets as an alternative if you prefer
+image: https://carameltintedlife.com/wp-content/uploads/2020/11/Chicken-Korma-1-of-1-2.jpg
+
+-- Ingredients
+- 2tbsp Vegetable Oil
+- [Meat] 500g Chicken Breast Fillets
+- 60g Butter
+- 2 Brown Onions
+- 6 tsp Ginger and Garlic Paste
+- Ground Black Pepper
+- [Spices] 3tsp Ground Cumin
+- [Spices] 3tsp Ground Coriander
+- [Spices] 1.5tsp Ground Turmeric
+- [Spices] 0.25tsp Mild Chilli Powder
+- 3 tbsp Mango Chutney
+- 450ml Hot Chicken Stock
+- 150ml Double Cream
+- [Garnish] Toasted Almond Flakes !optional
+- [Garnish] Fresh Coriander Leaves !optional
+- [Side] Basmati Rice
+
+-- Steps
+[10 minutes]
+Cut each [chicken breast] into small chunks (roughly 2.5cm) and season generously with [freshly ground black pepper].
+Dice the [onion] or cut into rings if blending later.
+
+[5 minutes]
+Heat [1 tbsp oil] in a large nonstick frying pan or wok and fry the chicken over a medium high heat for 5-6 mins, turning occassionally.
+Transfer the chicken to a plate using a slotted spoon or spatula and return the pan to the heat.
+Keep the chicken warm by covering in foil or placing in the oven on a low heat.
+
+[10 minutes]
+Add the remaining [1 tbsp oil], [butter] and [onions] to the pan and cook over a medium heat, stirring often for 10 mins or until the onions are soft and lightly browned.
+
+[1 minute]
+Stir in the [ginger and garlic paste] and [ground spices] and cook, stirring continuously for a further 90 secs.
+
+[8 minutes]
+Add the [mango chutney] and [stock] to the spiced onions and bring to a simmer.
+Cook for 8 mins until the liquid has reduced by roughly half, stirring regularly.
+Tip: For an extra smooth sauce, blitz the mixture with a blender. !optional
+
+[5 minutes]
+Return the [chicken] to the pan with the onions, add the [cream] and simmer gently, stirring occassionally for 5-6 mins until the chicken is piping hot and cooked through.
+Tip: Add a splash of water to loosen the sauce if necessary.
+
+Garnish the curry with [toasted flaked almonds] and scatter with [fresh coriander], if you like.
+Serve with [freshly cooked rice].
+
+-----
+
+-- Info
+name: Nando's Style Wrap
+meat: Chicken
+type: Snack
+tags: African
+serves: 1
+duration: 15 minutes
+calories: 400
+intensity: 2
+image: https://media-cdn.tripadvisor.com/media/photo-s/07/dc/81/9b/zizzi-beckenham.jpg
+description: A spicy peri-peri chicken wrap using Nando's sauce and chilli jam.
+
+-- Ingredients
+- 125g Sliced Chicken Breast
+- Peri Peri Spice
+- [Sauce] 1 tsp Nando's Medium Peri Peri Sauce
+- [Sauce] 1 tsp Mayonnaise
+- [Sauce] Nando's Sweet Chilli Jam
+- [Vegetables] Lettuce
+- [Vegetables] Sweetcorn
+- 1 Wrap
+- Grated Cheese
+
+-- Steps
+[5mins]
+Shred the [lettuce] and add the [sweetcorn] to a pot of boiling water.
+Cut each [chicken breast] into strips and cover in a light coating of oil and the [peri peri spice]. The oil will help the spice stick to the chicken more evenly.
+Add the [nando's peri peri sauce] to the [mayonnaise] in a cup and mix thoroughly. More or less peri peri sauce can be used depending on how spicy you would like it
+
+[5mins]
+Fry the chicken while the sweetcorn cooks.
+
+[2mins] 
+Once the chicken is almost finished, heat up the [wrap] and get ready to prepare it.
+Add a layer of the peri/mayonnaise sauce onto the wrap, then the [sweet chilli sauce]
+Add a layer of [lettuce], [sweetcorn] and [cheese]
+Add the cooked [chicken] in a line down the middle of the wrap and add the previous ingredients again in reverse order.
+Keeping the cheese near the chicken and sweetcorn helps it melt
+
+-----
+
+-- Info
+name: Pollo Picante
+meat: Chicken
+serves: 3
+duration: 25 minutes
+calories: 450
+intensity: 1
+tags: Italian
+image: https://media-cdn.tripadvisor.com/media/photo-s/07/dc/81/9b/zizzi-beckenham.jpg
+description: Comforting pasta, juicy toms, cleansing spinach and grilled chicken all wrapped up in a silky, fiery sauce, Zizzi's Casareccia Pollo Picante is unimaginably simple to create and everything you'd wish for in comfort food. Keep reading for the recipe I nabbed from one of their fine chefs.
+
+-- Ingredients
+- Ground Black Pepper
+- Vegetable Oil
+- Harissa Paste
+- [Pasta] 250g Pasta
+- Cream
+- [Vegetables] Plum Tomatoes
+- [Vegetables] Spinach
+- [Meat] 4-500g Chicken Breast Fillets
+- [Garnish] Permesan Cheese
+
+-- Steps
+[10 minutes]
+Cut each [chicken breast] into strips and season generously with [freshly ground black pepper]
+Slice the [tomatoes] into halves
+Start the pasta cooking
+
+[5 minutes]
+Heat [1 tbsp oil] in a large nonstick frying pan or wok and fry the chicken over a medium high heat for 5-6 mins, turning occassionally.
+Transfer the chicken to a plate using a slotted spoon or spatula and return the pan to the heat.
+Keep the chicken warm by covering in foil or placing in the oven on a low heat
+
+[3 minutes]
+Add the [cream], [harissa] and [tomato] to the pan, heating for 3 minutes
+
+[2 minutes]
+Return the chicken to the pan and heat for 2 minutes
+Add the [pasta] to the pan and a couple of tablespoons of starchy pasta water
+
+[5 minutes]
+Add the [spinach] to the pan and cook until the spinach has shriveled up
+Serve with freshly grated [parmesan cheese]
+
+-----
+
+-- Info
+name: Chicken Risotto
+meat: Chicken
+serves: 4
+intensity: 0
+duration: 50 minutes
+tags: Italian, Rice
+description: A simple rice based dish created with a chicken broth and bacon. Ideal for using roast chicken leftovers.
+
+-- Ingredients
+- 3 Rashers Streaky Bacon
+- 1 Large Onion
+- 1 Large Carrot
+- 2 Chicken Stock Cubes
+- 750ml Water
+- 25g Butter
+- 175g Long Grain Rice
+- 175g Cooked Chicken
+- 50g Cheese
+
+-- Steps
+Cut the [bacon] into small pieces and the [chicken] into small cubes.
+Dice the [onion] finely.
+Prepare the stock by adding the [stock cubes] to boiling [water]
+Chop the [carrots] into semi circle slices and add to boiling water.
+Grated the [cheese].
+
+[3mins]
+Melt the [butter] in the pan and cook the [bacon] for 3 minutes.
+
+[5mins]
+Add the [onion] to the sauce pan and stir constantly to prevent burning.
+Cook until the onion is soft.
+Add the rice and fry for 1 minute until it goes transparent.
+
+[20mins]
+Measure 100ml of the stock into a jug and add to the pan.
+Simmer and stir the mixture constantly until the water is absorbed and add more, repeating the process until all the stock is used. 
+This should take approximately 20 minutes.
+
+[10mins]
+Stir in the [chopped chicken] and [carrots].
+Simmer for a further 10 minutes.
+Tip: Add a little more water during this process if it dries out.
+
+[3mins]
+Add salt and pepper and the [grated cheese], stirring lightly and leaving for 3 minutes to finish cooking before serving.

@@ -1,0 +1,517 @@
+-- Info
+name: Savoury Mince
+meat: Beef
+tags: Beef
+serves: 3
+intensity: 1
+calories: 450
+description: A lightly spiced beef mince served with rice
+duration: 15mins
+
+-- Ingredients
+- 1 tbsp Vegetable Oil
+- [Meat] 500g Beef Mince
+- [Vegetables] 1 Onion
+- [Vegetables] 2 Large Carrots
+- [Spices] 1tsp Mixed Herbs
+- [Spices] 1tbsp Curry Powder
+- [Spices] 1tsp Mild Chilli
+- Worcester Sauce
+- 1 Beef Oxo Cube
+- Tomato Purée
+- Flour
+- Sultanas
+- [Side] 225g Bismati Rice
+- Cheese !optional
+- [Vegetables] 1 Sliced Pepper !optional
+
+-- Steps
+Cut the [carrots] into half-circles and place in boiling water and dice the [onions]
+
+[5mins]
+Heat [1 tbsp oil] in a large nonstick frying pan and fry the [beef mince] and [onions] until the mince is browned
+Add the sliced peppers !optional
+
+[10mins]
+Add 1tbsp of [flour] and [oxo cube] to the mince. Mix until the result is free of excess oil. 
+Add [mixed herbs], [mild chilli], plenty of [worcester sauce], [curry powder] (more if you want a spicier result), [tomato purée], [sultanas] and mix well.
+Tip: Add small amounts of water during cooking to keep the mince from getting dried out. How much water you want is up to you, and additional water will make more of a sauce if that's what you desire
+
+When the carrots are soft, add them to the mince
+Serve on top of the [rice] with [grated cheese] on top if you like
+
+-----
+
+-- Info
+name: Hoisin Beef
+meat: Beef
+serves: 3
+intensity: 2
+duration: 30 minutes
+tags: Thai
+description: A sweet and spicy Thai flavoured dish. Use a premade Thai spice blend to make life easier.
+
+-- Ingredients
+- 150ml Water
+- [Meat] 500g Beef Mince
+- [Thai Spice Blend] 2.5tsp White Sesame Seeds
+- [Thai Spice Blend] 1tsp Chilli Flakes
+- [Thai Spice Blend] 1tsp Coriander
+- [Thai Spice Blend] 1tsp Onion Powder
+- [Thai Spice Blend] 0.5tsp Garlic Powder
+- [Thai Spice Blend] 0.25tsp Cinnamon
+- [Thai Spice Blend] 0.125tsp Cayenna Pepper
+- [Vegetables] 2 Pak Choi
+- [Vegetables] 150g Green Beans
+- [Spices] 1 Garlic Clove
+- [Vegetables] Lime
+- [Side] Basmati Rice
+- Chicken Stock Paste
+- [Spices] 96g Hoisin Sauce
+- 1.5tbsp Honey
+
+-- Steps
+[2mins]
+Add the [sesame seeds], [chilli flakes], [coriander], [onion powder], [garlic powder], [cinammon] and [cayenne pepper] to a bowl, mixing well. This makes up our Thai style spice blend.
+You can use a premade spice blend if you wish.
+Start the [rice] cooking.
+
+[10mins]
+Trim the [pak choi] and thinly slice widthways.
+Trim the [green beans] (top and tail) and slice into thirds.
+Peel and grate the [garlic]
+Zest and halve the [lime]
+
+[5mins]
+Heat a large frying pan on medium-high heat with no oil.
+Add the [beef mince] and fry for 5-6 minutes until browned then season with [salt] and [pepper].
+Keep the fat for cooking the vegetables in the next step.
+
+[5mins]
+Lower the heat and add the [pak choi] and [green beans]. If there's not enough fat from the meat, add some additional oil.
+Cook for 4-5 minutes until the vegetables have softened.
+
+[5mins]
+Stir in the [garlic], [thai spice blend] (first step. It's spicy so you can leave some out if you'd like it milder!) and [chicken stock paste].
+Add the [water] into the mixture and stir well.
+Simmer until the liquid has recued by about half which should take 4-5 minutes.
+
+When it's finished cooking, stir in the [hoisin sauce], [honey] and a squeeze of [lime juice].
+Remove the beef from the heat and season with [salt], [pepper] and [sugar] if needed.
+
+Stir the [lime zest] through the [rice] and serve the [beef] on top.
+
+-----
+
+-- Info
+name: Hoisin Chicken Stir Fry
+meat: Chicken
+intensity: 1
+serves: 3
+duration: 35 minutes
+tags: Chinese
+description: A Chinese stir-fry that's both sweet and spicy thanks to the Hoisin sauce.
+
+-- Ingredients
+- Water
+- [Meat] 500g Chicken
+- [Vegetables] 1 Red Pepper
+- [Spices] 1tsp Chinese 5 Spice
+- [Vegetables] Handful of Green Beans
+- [Vegetables] 1 Red Onion
+- [Vegetables] 4 Spring Onions
+- [Spices] 1tbsp Ginger Paste
+- [Spices] 2 Garlic Cloves
+- Fresh Coriander
+- 3 Noodle Nests
+- [Spices] 2tbsp Soy Sauce
+- [Spices] 80ml Hoison Sauce
+- Vegetable Oil
+
+-- Steps
+[4mins]
+Cook the [noodle nests] in boiling water for 4 minutes, using tongs to break them up in the water as they cook. 
+Drain and run under cool water and put back on top of the sauce pan.
+
+[10mins]
+Cut the [red pepper] into strips and trim a handful of [green beans] (top and tail) and cut into thirds.
+Cut up the [red onion] into thin crescents, trim the [spring onions] and thinly slice.
+Prepare the [garlic cloves] and chop the [coriander] into small pieces.
+
+[8mins]
+Stir fry the [chicken] in a little [oil] for about 8 minutes until it is browned.
+Remove the chicken from the heat and put in a bowl / plate.
+
+[6mins]
+Add a little more [oil] to the pan and lower the heat.
+Add the [green beans], [pepper] and cook for 3-4 minutes until they are soft. Add more oil during cooking if needed to prevent burning.
+Add the [red onion] and cook for 2 minutes more.
+
+[3mins]
+Add the cooked [chicken] back to the pan.
+Add the [ginger paste], [crushed garlic] and cook for 1 minute more.
+Add the [noodles], [soy sauce], [hoisin sauce] and a splash of water if necessary. Toss well.
+
+[2mins]
+Cook for a further 2 minutes then add the [spring onion] and [coriander].
+Serve!
+
+-----
+
+-- Info
+name: Egg Fried Rice
+meat: Egg
+duration: 15 minutes
+serves: 2
+description: A meal in itself or can be used instead of rice when other dishes call for it. Easy to add extra ingredients to like sweetcorn, ham, prawns or just about anything else you can think of.
+
+-- Ingredients
+- 1 Egg
+- 2tbsp Sesame Oil
+- 2tbsp Vegetable Oil
+- 200g Long Grain Rice
+- [Vegetables] 100g Frozen Peas
+- [Vegetables] 4 Spring Onions
+- [Vegetables] 100g Bean Sprouts !optional
+- 1-2tbsp Soy Sauce
+- Ground White Pepper
+
+-- Steps
+[2mins]
+Beat together the [egg] and [sesame oil], placing to one side
+
+[4mins]
+Heat the [oil] in a wok or large frying pan. When it's shimmering and almost smoking, add the [rice] and stir fry for about 3-4 minutes until completely heated through.
+
+[5mins]
+Add the [peas], [spring onion] and [beansprouts]. 
+Stir fry, turning the [rice] constantly around the pan for about 3 minutes.
+Season well with the [soy sauce] and [pepper]
+
+[5mins]
+Make a hole in the contents of the pan at the centre.
+Pour the [egg] mixture into the hole and leave for about 10 seconds until it starts to set.
+Break up the egg into small clumps as it cooks and mix in with the [rice].
+Stir fry for another minute and serve.
+
+-----
+
+-- Info
+name: Lasagne
+meat: Beef
+serves: 6
+duration: 80 minutes
+intensity: 0
+tags: Italian
+description: A classic recipe that has a lot of work involved in making but it's well worth it! Great for leftovers too.
+
+-- Ingredients
+- 250g Lasagne Sheets
+- 60g Unsalted Butter
+- 60g Plain Flour
+- 700ml Whole Milk
+- Basil
+
+-- Steps
+[15mins]
+For the béchamel sauce, heat the [butter] in a sauce pan over a medium-high heat.
+Add the [flour] and stir constantly for 3-4 minutes until it starts to smell biscuit-y.
+Slowly add the [milk], whisking all the time for 6-8 minutes until the sauce has thickened.
+Remove from the heat, stir in 20g of [parmesan] and season with [salt] and [pepper].
+
+To assemble, spread some of the béchamel sauce over the bottom of the oven dish and add two layers in the following order: 
+Order: [lasagne sheets] -> [béchamel sauce] -> [grated cheese] -> [meat sauce]
+Add the final layer of [lasagne sheets] and spread over the remaining [béchamel sauce].
+Cover with the remaining [grated cheese].
+
+[25mins]
+Bake the lasagne for 25mins in an oven at 200C until the top is bubbling.
+Serve garnished with [basic] and [parmesan]
+
+-----
+
+-- Info
+name: Honey and Soy Sauce Salmon
+meat: Salmon
+intensity: 1
+serves: 4
+duration: 20 minutes
+description: A sweet and savoury Salmon dish that's quick and simple to make. Can be served with rice, <recipe:egg-fried-rice> or just about anything else.
+
+-- Ingredients
+- 1lb Fresh Salmon
+- 1tbsp Olive Oil
+- 2tbsp Butter
+- Lemon Juice
+- [Sauce] 1/4 Cup Soy Sauce
+- [Sauce] 1/4 Cup Honey
+- [Sauce] 1/4tsbp Garlic Powder
+- [Sauce] 1/2tbsp, Cornstarch
+- [Side] 300g Egg Fried Rice
+
+-- Steps
+Tip: Take the [salmon] out of the fridge 15-20 minutes prior to cooking to let it reach room temperature.
+Cut the [salmon] into 4 equal sized pieces and pat dry with a paper towel.
+Season with [salt] and [pepper].
+
+[3mins]
+Add the [soy sauce], [honey], [garlic powder] and [cornstarch] to a bowl and whisk together thoroughly. Set aside for now.
+
+[2mins]
+Add the [olive oil] and 1tbsp [butter] to a skillet over a medium-high heat. Let it heat up for a couple of minutes.
+
+[8mins]
+Cook the [salmon] skin-side down for 5 minutes.
+Reduce the heat to medium and flip the salmon over, cooking for a further 2-3 minutes. Keep an eye on the side of the salmon to judge how much it's cooked.
+
+[5mins]
+Add the remaining [butter] to the skillet and let it melt.
+Pour in the sauce between the pieces of salmon and let it thicken for about 30 seconds.
+Remove the skillet from the heat and flip the salmon over.
+Spoon the sauce from the pan over the salmon.
+
+Squeeze some lemon juice over the salmon and serve immediately with [egg fried rice].
+
+-----
+
+-- Info
+name: Honey Chicken
+meat: Chicken
+description: A simple, sweet chicken dish. Serve with mash and green veg.
+serves: 6
+duration: 40 minutes
+
+-- Ingredients
+- Chicken Legs
+- [Marinade] 6tbsp Tomato Ketchup
+- [Marinade] 2tbsp Tomato Purée
+- [Marinade] 2tbsp Grainy Mustard
+- [Marinade] 3tbsp Worcestershire Sauce
+- [Marinade] 1 Garlic Clove
+- [Side] Mashed Potato
+
+-- Steps
+[5mins]
+Heat the oven to 200C and line a roasting tin with baking paper.
+Using a sharp knife, make shallow slits in the top of the chicken legs.
+
+[5mins]
+Add the [ketchup], [tomato puréee], [mustard], [worcestershire sauce] and crushed [garlic] to a bowl.
+Stir until fully combined.
+Add the [chicken legs] and toss in the marinade to coat them.
+Cover the bowl and put in the fridge to mariande for at least 30 minutes.
+
+[35mins]
+Place the marinated [chicken legs] in the roasting tin skin-side up in a single layer.
+Spoon over the remaining marinade from the bowl.
+Roast in the over for 35 minutes until sticky and golden.
+Skim any fat off the cooking juices and pour them into a jug.
+
+Serve hot with the juices poured over alongside the mashed potatoes and green veg.
+
+-----
+
+-- Info
+name: Chicken Pie
+meat: Chicken
+
+-----
+
+-- Info
+name: Mince Pie
+meat: Beef
+
+-----
+
+-- Info
+name: Spaghetti Bolognaise
+meat: Beef
+tags: Italian
+
+-----
+
+-- Info
+name: Pork Meatballs
+meat: Pork
+duration: 40 minutes
+serves: 3
+description: Pork meatballs serves in a creamy sauce with potatoes and green beans on the side.
+
+-- Ingredients
+- Potatoes
+- Chives
+- [Meat] 360g Pork Mince
+- [Spices] Garlic Clove
+- [Spices] Italian Style Herbs
+- [Vegetables] 200g Green Beans
+- 20g Panko Breadcrumbs
+- 225g Creme Fraiche
+- 1 Chicken Stock Paste
+
+-- Steps
+[15mins]
+Preheat the oven to 200C.
+Chop the [potatoes] lengthways into 1cm slices then into 1cm wide chips.
+Place the chips on a large baking tray, drizzle with [oil] and season with salt and pepper, tossing to coat.
+Roast the chips on the middle shelf of the oven for 25-30 minutes.
+
+Peel and grate the [garlic].
+Mix the [italian style herbs], [breadcrumbs], 3tbsp [water] and 1/2tsp [salt] in a bowl.
+Add the [pork mince] and half the [garlic], seasoning with pepper.
+Roll the mince into even-size balls, approximately 5 per person.
+Place the finished meatballs in a baking tray.
+
+[5mins]
+Trim the [green beans] (top and tail) and roughly chop the [chives].
+Halfway through the [chips] cooking, turn them and add the [meatballs] to the top shelf of the oven.
+Bake until they are browned on the outside which should take about 12-15 minutes.
+
+[5mins]
+When 10 minutes remain, boil some water in a pan and add the [beans], cooking until they're soft.
+Turn the heat off, drain the water and season with salt and pepper. Add a little [butter], covering to keep warm.
+
+[5mins]
+Add a little oil to a pan and add the remaining [garlic], frying for about 30 seconds until fragrant.
+Stir in the [creme fraiche], [chicken stock paste] and 100ml of [water]
+Bring to the boil and simmer until thickened for 1-2 minutes
+Stir in three quarters of the [chives] and season with [pepper]
+
+Add the cooked [meatballs] to the sauce and stir through.
+Sprinkle the remaining [chives] over the [meatballs] and serve alongside the [chips] and [green beans]
+
+-----
+
+-- Info
+name: Chicken Jambalaya
+meat: Chicken
+serves: 3
+duration: 50 minutes
+intensity: 1
+description: A spicy cajun chicken dish with tomatoes and chorizo.
+image: https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1274503_8-05ae02b.jpg?quality=90&webp=true&resize=300,272
+
+-- Ingredients
+- 1tbsp Olive Oil
+- 2 Chopped Chicken Breasts
+- [Vegetables] 1 Onion
+- [Vegetables] 1 Red Papper
+- 2 Garlic Cloves
+- 75g Chorizo
+- [Spices] 1tbsp Cajun Seasoning
+- 250g Long Grain Rice
+- 400g Canned Plum Tomatoes
+- 350ml Chicken Stock
+
+-- Steps
+[10mins] 
+Cut the [chicken breast] pieces into strips.
+Dice the [onion] and slice the [red pepper]
+
+[5mins]
+Heat the [oil] in the pan and brown the chicken breast until golden.
+Remove the chicken from the pan and set aside.
+
+[4mins]
+Add the [diced onion] to the pan and cook for 3-4 mins until soft. Add additional oil if there's not enough juices from frying the chicken remaining.
+
+[5mins]
+Add the [sliced pepper], crushed [garlic cloves], [chorizo], [cajun seasoning] and cook for another 5 minutes
+
+[25mins]
+Add the [chicken] back to the pan along with the [rice], [plum tomatoes] and [chicken stock].
+Cover and simmer for 20-25 minutes, stirring occassionally to prevent sticking. Add more water if it dries out too much.
+
+-----
+
+-- Info
+name: Hunter's Chicken
+meat: Chicken
+
+-----
+
+-- Info
+name: Fish in Parsley Sauce
+meat: Fish
+
+-----
+
+-- Info
+name: Victoria Sponge Cake
+type: Bakery
+meat: None
+
+-----
+
+-- Info
+name: Maori Kisses
+type: Bakery
+meat: None
+
+-----
+
+-- Info
+name: Chocolate Brownies
+type: Bakery
+meat: None
+
+-----
+
+-- Info
+name: Chocolate Chip Cookies
+type: Bakery
+meat: None
+
+-----
+
+-- Info
+name: Banana Bread
+type: Bakery
+meat: None
+
+-----
+
+-- Info
+name: Blondies
+type: Bakery
+meat: None
+
+-----
+
+-- Info
+name: Pork Chops & Apple Ketchup
+meat: Pork
+serves: 4
+duration: 40 minutes
+description: Sweet pork chops with apple sauce.
+
+-- Ingredients
+- 2tbsp Table Salt
+- 2tbsp Caster Sugar
+- 1tsp Ground Black Pepper
+- 4 Medium Pork Chops
+- [Ketchup] 2 Medium Barmley Apples
+- [Ketchup] 75ml Cider Vinegar
+- [Ketchup] 100g Caster Sugar
+
+-- Steps
+[20mins]
+Mix the [salt], [sugar] and [pepper] together and spinkle evenly over the [pork chops]. 
+Rub it in gently and repeat for the other side, then leave for 10 minutes. 
+Flip over and leave for another 10 minutes.
+
+[5mins]
+Meanwhile peel and chop the [apples] then place them into a pan with a little [water], the [vinegar] and [sugar].
+Cook over a gentle heat until pulpy.
+
+Once the [apples] are cooked, place into a liquidiser to blitz them or mash them up.
+Pour in the [syrup] and strain through a sieve.
+
+Wash the [sugar] and [salt] off the [pork chops] and pat dry with a kitchen towel.
+
+[20mins]
+Heat up a frying pan with a dash of oil and gently cook the [pork chops] for 5-6 minutes on each side.
+Remove the pan from the heat and cover loosely with foil, leaving for 10 minutes.
+Make sure the pork chops are just about cooked, not overcooked.
+
+Serve the [pork chops] with the [apple ketchup].
+

@@ -1,0 +1,103 @@
+x-recipe-catalogue {
+    &.remove {
+        animation: 0.4s ease-out fade-out;
+        animation-fill-mode: both;
+    }
+
+    animation: 0.3s linear fade-in;
+
+    grid-area: main;
+    width: 100%;
+    //border-top: 2em solid var(--sidebar-color);
+
+    max-width: calc((8.25in - 20mm) * var(--screen-scale));
+    margin: 1em auto;
+    display: block;
+
+    @media screen and (max-width: $mobile_width) {
+        padding: 1em;
+    }
+
+    h1 {
+        margin: 0.5em 0;
+        font-size: 1.4em;
+        //font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        color: var(--accent-color);
+
+        span {
+        }
+
+        &:before,
+        &:after {
+            display: block;
+            content: " ";
+            height: 1px;
+            background: #ccc;
+            flex: 1;
+        }
+    }
+
+    ul {
+        --item-width: 12em;
+
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
+        grid-gap: 0.6rem;
+        margin: 1em 0;
+        list-style: circle;
+
+        @media all and (max-width: $mobile_width) {
+            --item-width: 10em;
+        }
+
+        li {
+            margin-left: 1em;
+
+            a {
+                text-decoration: none;
+                color: inherit;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    a {
+        cursor: pointer;
+    }
+
+    .filter {
+        display: flex;
+        gap: 0.5em;
+
+        label {
+            padding: 0.5em 0.7em;
+            border: 1px solid #aaa;
+            background: transparent;
+            border-radius: 0.4em;
+            font-size: 1rem;
+
+            &:has(input:focus),
+            &:has(select:focus) {
+                background-color: #eee;
+            }
+
+            select,
+            input {
+                border: none;
+                padding: 0;
+                font-weight: bold;
+                background: transparent;
+            }
+
+            &.group {
+                margin-left: auto;
+            }
+        }
+    }
+}
