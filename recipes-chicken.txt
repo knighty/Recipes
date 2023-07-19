@@ -118,7 +118,7 @@ description: Comforting pasta, juicy toms, cleansing spinach and grilled chicken
 - Cream
 - [Vegetables] Plum Tomatoes
 - [Vegetables] Spinach
-- [Meat] 4-500g Chicken Breast Fillets
+- [Meat] 400-500g Chicken Breast Fillets
 - [Garnish] Permesan Cheese
 
 -- Steps

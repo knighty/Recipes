@@ -1,24 +1,6 @@
 import { Ingredient, Step } from "./recipe.js";
 import HTMLContext from "./html-context.js";
-import MeasureRenderer from "./measure-renderer.js";
-
-class PlainTextContext {
-    constructor() {
-        this.measureRenderer = new MeasureRenderer({html: false});
-    }
-
-    highlightedWord(word) {
-        return word;
-    }
-
-    paragraph(html, classes) {
-        return html;
-    }
-
-    measure(measure) {
-        return this.measureRenderer.render(measure);
-    }
-}
+import PlainTextContext from "./plain-text-context.js";
 
 export class NodeVisitor {
     constructor() {

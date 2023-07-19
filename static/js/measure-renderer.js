@@ -161,7 +161,7 @@ export default class MeasureRenderer {
 
         const text = `${number}${p.space ? " " : ""}${p.units}`;
         if (this.options?.html) {
-            return `<span class="measure" title="">${escapeHtml(text)}</span>`;
+            return `<span class="measure" title="" ${measure.type == "time" ? `data-timer="${measure.min}"` : `` }>${escapeHtml(text)}</span>`;
         } else {
             return text;
         }

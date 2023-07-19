@@ -3,7 +3,7 @@ import MeasureRenderer from "./measure-renderer.js";
 
 export default class HTMLContext {
     constructor() {
-        this.measureRenderer = new MeasureRenderer();
+        this.measureRenderer = new MeasureRenderer({html: true});
     }
 
     highlightedWord(word) {
@@ -15,7 +15,7 @@ export default class HTMLContext {
     }
 
     measure(measure) {
-        return `<span class="measure" title="">${this.measureRenderer.render(measure)}</span>`;
+        return this.measureRenderer.render(measure);
     }
 
     text(text) {

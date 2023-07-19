@@ -60,7 +60,7 @@ description: A sweet and spicy Thai flavoured dish. Use a premade Thai spice ble
 - [Thai Spice Blend] 1tsp Onion Powder
 - [Thai Spice Blend] 0.5tsp Garlic Powder
 - [Thai Spice Blend] 0.25tsp Cinnamon
-- [Thai Spice Blend] 0.125tsp Cayenna Pepper
+- [Thai Spice Blend] 0.125tsp Cayenne Pepper
 - [Vegetables] 2 Pak Choi
 - [Vegetables] 150g Green Beans
 - [Spices] 1 Garlic Clove

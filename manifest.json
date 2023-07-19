@@ -1,0 +1,8 @@
+{
+    "name": "Recipe Catalogue",
+    "short_name": "Recipes",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "A catalogue of recipes"
+  }

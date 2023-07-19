@@ -1,6 +1,10 @@
 x-app {
     display: grid;
+    grid-template-rows: min-content 1fr;
     grid-template-columns: 100%;
-    grid-template-areas: "main";
+    grid-template-areas: "toolbar"
+    "main";
     overflow-x: hidden;
+    overflow-y: hidden;
+    min-height: 100vh;
 }

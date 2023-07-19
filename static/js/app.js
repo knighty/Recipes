@@ -1,4 +1,5 @@
 import RecipeRepository from "./recipe-repository.js";
+import { observeScopedEvent } from "./utils.js";
 
 const recipeRepository = new RecipeRepository();
 
@@ -12,6 +13,8 @@ export default class App extends HTMLElement {
             title$.next(title);
             this.appendChild(view);
             observer.next(view);
+
+            return () => view.saveState();
         }).pipe(
             rxjs.operators.finalize(_ => {
                 view.classList.add("remove");
@@ -20,15 +23,18 @@ export default class App extends HTMLElement {
         );
     }
 
-    showRecipe(recipe) {
+    showRecipe(state, recipe) {
         return this.genericRoute("x-recipe", recipe.name).pipe(
             rxjs.operators.tap(view => view.showRecipe(recipe))
         );
     }
 
-    showCatalogue() {
+    showCatalogue(state) {
         return this.genericRoute("x-recipe-catalogue", "Recipe Catalogue").pipe(
-            rxjs.operators.tap(view => view.recipeRepository$.next(recipeRepository))
+            rxjs.operators.tap(view => {
+                view.recipeRepository$.next(recipeRepository);
+                view.setState(state);
+            })
         );
     }
 
@@ -36,12 +42,12 @@ export default class App extends HTMLElement {
         const routes = [
             {
                 route: /^\/$/,
-                handler: () => this.showCatalogue()
+                handler: (state) => this.showCatalogue(state)
             },
             {
                 route: /^\/recipe\/([a-z0-9\-]*)$/,
-                handler: (url, id) => recipeRepository.getById(id).pipe(
-                    rxjs.operators.switchMap(recipe => this.showRecipe(recipe))
+                handler: (state, url, id) => recipeRepository.getById(id).pipe(
+                    rxjs.operators.switchMap(recipe => this.showRecipe(state, recipe))
                 )
             }
         ]
@@ -87,15 +93,36 @@ export default class App extends HTMLElement {
             rxjs.operators.map(e => {
                 const path = e.uri;
                 const state = e.state;
+
+                console.log(`Navigating to "${path}" with "${JSON.stringify(state)}"`);
+
                 for (let route of routes) {
                     const matches = route.route.exec(path);
                     if (matches) {
-                        return route.handler(...matches);
+                        return route.handler(state, ...matches);
                     }
                 }
                 throw new Error(`Non matching route "${path}"`);
             }),
             rxjs.operators.switchMap(route => route)
+        ).subscribe();
+
+        observeScopedEvent(document, "click", "[data-timer]", true).pipe(
+            rxjs.operators.map(([element, e]) => element.dataset.timer),
+            rxjs.operators.filter(time => time !== undefined),
+            rxjs.operators.map(time => parseInt(time)),
+            rxjs.operators.switchMap(time => {
+                const timer = document.createElement("x-timer");
+                this.appendChild(timer);
+                timer.setTimer(time);
+
+                return rxjs.of(true);
+
+                /*return timer.finished$.pipe(
+                    rxjs.operators.first(),
+                    rxjs.operators.finalize(() => this.removeChild(timer))
+                )*/
+            }),
         ).subscribe();
 
         /* rxjs.fromEvent(window, "hashchange").pipe(

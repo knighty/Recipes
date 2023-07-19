@@ -1,3 +1,5 @@
+import { observeInput } from "../utils.js";
+
 export default class RecipeCatalogueView extends HTMLElement {
     constructor() {
         super();
@@ -7,10 +9,25 @@ export default class RecipeCatalogueView extends HTMLElement {
         this.name$ = new rxjs.BehaviorSubject("");
         this.disconnected$ = new rxjs.ReplaySubject(1);
         this.recipeRepository$ = new rxjs.ReplaySubject(1);
+        this.saveState$ = new rxjs.Subject();
+    }
+
+    setState(state) {
+        console.log(state);
+        if (state?.grouping) {
+            this.grouping$.next(state.grouping);
+        }
+        if (state?.search) {
+            this.search$.next(state.search);
+        }
     }
 
     disconnectedCallback() {
-        this.disconnected$.next();
+        this.disconnected$.next(true);
+    }
+
+    saveState() {
+        this.saveState$.next();
     }
 
     connectedCallback() {
@@ -35,14 +52,43 @@ export default class RecipeCatalogueView extends HTMLElement {
             </label>
         `;
 
+        const groupingSelect = filter.querySelector(`[name="grouping"]`);
+        const searchInput = filter.querySelector(`[name="search"]`);
+
+        const grouping$ = rxjs.merge(
+            observeInput(groupingSelect, "input"),
+            this.grouping$
+        ).pipe(
+            rxjs.operators.startWith(groupingSelect.value),
+            rxjs.operators.tap(value => groupingSelect.value = value)
+        );
+
+        const search$ = rxjs.merge(
+            observeInput(searchInput, "input").pipe(
+                rxjs.operators.debounceTime(300)
+            ),
+            this.search$
+        ).pipe(
+            rxjs.operators.startWith(searchInput.value),
+            rxjs.operators.tap(value => searchInput.value = value)
+        );
+
+        rxjs.combineLatest(grouping$, search$).pipe(
+            rxjs.operators.takeUntil(this.saveState$),
+            //rxjs.operators.last(),
+            rxjs.operators.map(([grouping, search]) => {
+                return { grouping: grouping, search: search }
+            }),
+            //rxjs.operators.tap(state => console.log(`Replacing state: ${JSON.stringify(state)}`))
+        ).subscribe(state => history.replaceState(state, ""));
+
         const recipesList = document.createElement("div");
-        this.search$.pipe(
+        search$.pipe(
             rxjs.operators.map(search => search.toLowerCase()),
-            rxjs.operators.debounceTime(300),
             rxjs.operators.startWith(""),
             rxjs.operators.combineLatest(this.recipeRepository$),
             rxjs.operators.switchMap(([search, repository]) => repository.find(search)),
-            rxjs.operators.combineLatest(this.grouping$, (recipes, grouping) => {
+            rxjs.operators.combineLatest(grouping$, (recipes, grouping) => {
                 const groups = {};
                 let groupingFunc = () => "";
                 let orderingFunc = (a, b) => a.name.localeCompare(b.name);
@@ -97,20 +143,6 @@ export default class RecipeCatalogueView extends HTMLElement {
 
         this.appendChild(filter);
         this.appendChild(recipesList);
-
-        const groupingSelect = filter.querySelector(`[name="grouping"]`);
-        const searchInput = filter.querySelector(`[name="search"]`);
-
-        this.grouping$.pipe(rxjs.operators.takeUntil(this.disconnected$)).subscribe(grouping => groupingSelect.value = grouping);
-        this.search$.pipe(rxjs.operators.takeUntil(this.disconnected$)).subscribe(search => searchInput.value = search);
-
-        rxjs.fromEvent(groupingSelect, "input").pipe(
-            rxjs.operators.takeUntil(this.disconnected$),
-        ).subscribe(grouping => this.grouping$.next(grouping.target.value));
-
-        rxjs.fromEvent(searchInput, "input").pipe(
-            rxjs.operators.takeUntil(this.disconnected$),
-        ).subscribe(e => this.search$.next(e.target.value));
 
         rxjs.fromEvent(this, "click").pipe(
             rxjs.operators.map(e => e.target.dataset.recipe),

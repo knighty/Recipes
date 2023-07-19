@@ -1,15 +1,16 @@
 import HTMLContext from "../html-context.js";
+import PlainTextContext from "../plain-text-context.js";
+import { escapeHtml, groupArray, observeScopedEvent } from "../utils.js";
+import { selectedVoice$ } from "../voice.js";
 
 export default class RecipeView extends HTMLElement {
-    parseIngredients(ingredients) {
-        let categories = {};
+    constructor() {
+        super();
+        this.disconnected$ = new rxjs.ReplaySubject(1);
+    }
 
-        for (let ingredient of ingredients) {
-            categories[ingredient.category] = categories[ingredient.category] || { name: ingredient.category, ingredients: [] };
-            categories[ingredient.category].ingredients.push(ingredient);
-        }
+    saveState() {
 
-        return categories;
     }
 
     spicyToText(recipe) {
@@ -38,9 +39,7 @@ export default class RecipeView extends HTMLElement {
 
     showRecipe(recipe) {
         const htmlContext = new HTMLContext();
-
-        /*<div class="top-curve"></div>
-            <div class="bottom-curve"></div>*/
+        const plainTextContext = new PlainTextContext();
 
         this.innerHTML = `
             <div class="top-bar"></div>
@@ -69,8 +68,8 @@ export default class RecipeView extends HTMLElement {
 
         // Steps
         this.elements.steps.innerHTML = recipe.steps.map((step, index) => {
-            return `<section>
-                <div class="duration">${step.duration ? `<span data-num="${step.duration.min / 60}" data-units="min${step.duration.min > 1 ? `s` : ``}"></span>` : ``}</div>
+            return `<section data-text="${step.html.getHTML(plainTextContext)}">
+                <div class="duration"${step.duration ? ` data-timer="${step.duration.min}"` : ``}>${step.duration ? `<span data-num="${step.duration.min / 60}" data-units="min${step.duration.min > 1 ? `s` : ``}"></span>` : ``}</div>
                 <div class="text">
                     ${step.html.getHTML(htmlContext)}
                 </div>
@@ -78,15 +77,45 @@ export default class RecipeView extends HTMLElement {
         }).join("");
 
         // Ingredients
-        const categories = this.parseIngredients(recipe.ingredients);
-        this.elements.ingredients.innerHTML = Object.values(categories).map(category => `
-            ${category.name != "-" ? `<h2>${category.name}</h2>` : ``}
-            ${category.ingredients.map(ingredient => `<label${ingredient.optional ? ` class="optional"` : ``}><input type="checkbox" /><span></span>${ingredient.html}</label>`).join("")}
+        this.elements.ingredients.innerHTML = Object.entries(recipe.ingredients.group(ingredient => ingredient.category)).map(([group, items]) => `
+            ${group != "-" ? `<h2>${group}</h2>` : ``}
+            ${items.map(ingredient => `<label${ingredient.optional ? ` class="optional"` : ``}><input type="checkbox" /><span></span>${ingredient.html}</label>`).join("")}
             `).join("");
+
+        function read(step, line) {
+            return selectedVoice$.pipe(
+                rxjs.operators.switchMap(([index, voice]) =>
+                    rxjs.Observable.create(observer => {
+                        step.classList.add("reading");
+                        const utterance = new SpeechSynthesisUtterance(line);
+                        utterance.pitch = 1;
+                        utterance.rate = 1;
+                        utterance.voice = voice;
+                        utterance.addEventListener("end", (e) => {
+                            observer.complete();
+                        });
+                        window.speechSynthesis.speak(utterance);
+
+                        return () => {
+                            step.classList.remove("reading");
+                            window.speechSynthesis.cancel();
+                        }
+                    })
+                )
+            )
+        }
+
+        const readStep$ = observeScopedEvent(this.querySelector(".steps"), "click", "section").pipe(
+            rxjs.operators.map(([element, e]) => [element, element.dataset.text])
+        );
+
+        readStep$.pipe(
+            rxjs.operators.switchMap(([element, line]) => read(element, line)),
+            rxjs.operators.takeUntil(this.disconnected$)
+        ).subscribe();
     }
 
-    connectedCallback() {
-        /*const recipeSelector = document.getElementById("recipe-selector");
-        recipeSelector.selectedRecipe$.subscribe(this.showRecipe.bind(this));*/
+    disconnectedCallback() {
+        this.disconnected$.next();
     }
 }

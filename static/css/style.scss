@@ -53,9 +53,16 @@ html {
 @import "animations";
 
 @import "app";
+@import "settings";
+@import "timer";
+@import "toolbar";
 
 @import "recipe";
 @import "catalogue";
+
+html, body {
+    overscroll-behavior: none;
+}
 
 body {
     font-family: $font_body;
@@ -81,7 +88,7 @@ input {
 }
 
 select {
-    padding: 0.5em 0.7em;
+    padding: 0.5em 0.5em;
     border: 1px solid #aaa;
     background: transparent;
     border-radius: 0.4em;
@@ -102,24 +109,6 @@ select {
     size: 8.25in 11.75in;
     $margin: 10mm;
     margin: $margin $margin $margin $margin;
-}
-
-$toolbar_background_color: #5c7dc0;
-
-.toolbar {
-    display: none;
-    background-color: $toolbar_background_color;
-    border-bottom: 3px solid scale-color($toolbar_background_color, $lightness: -20%);
-    padding: 1em;
-    margin-bottom: 1em;
-
-    select {
-        border: 1px solid scale-color($toolbar_background_color, $lightness: -20%);
-        font-size: 1em;
-        padding: 0.5em;
-        border-radius: 1000px;
-        background: #fff;
-    }
 }
 
 .bleed {

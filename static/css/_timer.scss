@@ -1,0 +1,114 @@
+@font-face {
+    font-family: "7segment";
+    src: url("/static/fonts/7segment.woff") format("woff");
+}
+
+x-timer {
+    @media print {
+        display: none !important;
+    }
+
+    position: fixed;
+    bottom: 1em;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0.5em;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    background-color: var(--accent-color);
+    z-index: 1000;
+    border-radius: 0.5em;
+    //background-clip: padding-box;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0px 0px 0px 2px #24c7b8 inset;
+    color: #333;
+    display: grid;
+    gap: 0.5em;
+    grid-template-columns: 1fr 5em min-content;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "timer stop min"
+        "timer stop sec";
+    user-select: none;
+
+    button {
+        font-size: 1.1em;
+        color: #fff;
+        background-color: #ffffff2b;
+        border: 0px solid rgba(0, 0, 0, 0.26);
+        padding: 0 0.7em;
+        font-weight: bold;
+        border-radius: 0.5rem;
+        background-clip: padding-box;
+        text-shadow: -1px -1px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 0px 0px 1px #4cbdb2 inset, 2px 2px 1px #00000026;
+        //border-bottom-width: 2px;
+        border-right-width: 0px;
+
+        @media screen and (min-width: $mobile_width) {
+            &:hover {
+                cursor: pointer;
+                background-color: #ffffff4b;
+            }
+
+            &:active {
+                box-shadow: 0px 0px 0px 3px #00000038 inset;
+            }
+        }
+
+        &[name="stop"] {
+            grid-area: stop;
+            font-size: 1.3em;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4em;
+
+            span:nth-child(2) {
+                font-size: 0.6em;
+                color: rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        &[name="add10s"] {
+            grid-area: sec;
+        }
+
+        &[name="add1min"] {
+            grid-area: min;
+        }
+    }
+
+    .time {
+        padding: 0.1em 0.2em;
+        border-radius: 0.5rem;
+        background-color: #444;
+        font-family: "7segment", sans-serif;
+        font-size: 4em;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: "main";
+        flex: 1;
+        grid-area: timer;
+        border: 1px solid #000;
+        box-shadow: 0px 0px 10px inset #000;
+
+        &:before {
+            display: block;
+            grid-area: main;
+            content: "00:00";
+            text-align: right;
+            color: #555;
+        }
+
+        &:after {
+            display: block;
+            grid-area: main;
+            content: attr(data-time);
+            align-self: end;
+            text-align: right;
+            color: #fff;
+            text-shadow: 0px 0px 7px rgba(0, 0, 0, 1);
+        }
+    }
+}

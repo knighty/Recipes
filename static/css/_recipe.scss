@@ -1,12 +1,12 @@
 x-recipe {
-    overflow-x: hidden;
-    overflow-y: auto;
+    //overflow-x: hidden;
+    //overflow-y: auto;
     grid-area: main;
 
     line-height: 1.25em;
 
     @media (min-width: $mobile_width), print {
-        height: 100vh;
+        //height: 100vh;
         //height: calc(var(--page-height) * var(--screen-scale));
         display: grid;
         grid-template-columns:
@@ -341,6 +341,10 @@ x-recipe {
             align-items: stretch;
             gap: 0.5em;
 
+            &.reading {
+                background:linear-gradient(to right, rgba(#fff9c4,0), #fff9c4, rgba(#fff9c4,0));
+            }
+
             &:not(:last-child) .text {
                 border-bottom: 1px solid #ccc;
             }
@@ -505,6 +509,8 @@ x-recipe {
                 &:checked + span {
                     background: $sidebar_color_strong;
                     content: "✓";
+                    width: initial;
+                    height: initial;
                 }
             }
         }

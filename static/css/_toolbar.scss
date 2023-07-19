@@ -1,0 +1,28 @@
+x-toolbar {
+    grid-area: toolbar;
+    color: #eee;
+    display: block;
+    background: #4e342e;
+    padding: 0.5em;
+    border-bottom: 1px solid #8d6e63;
+
+    select {
+        background: #fff;
+        border-color: #8d6e63;
+        color: #333;
+        padding: 0.2em 0.5em;
+    }
+
+    @media print {
+        display: none;
+    }
+
+    button {
+        background: #8d6e63;
+        color: #ffffff;
+        padding: 0.2em 0.5em;
+        border-radius: 0.2em;
+        font-weight: bold;
+        border: 1px solid #ab8e88;
+    }
+}
