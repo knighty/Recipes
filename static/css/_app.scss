@@ -2,9 +2,15 @@ x-app {
     display: grid;
     grid-template-rows: min-content 1fr;
     grid-template-columns: 100%;
-    grid-template-areas: "toolbar"
-    "main";
+    grid-template-areas:
+        "toolbar"
+        "main";
     overflow-x: hidden;
     overflow-y: hidden;
     min-height: 100vh;
+
+    @media screen and (max-width: $mobile_width) {
+        min-height: 100vh;
+        height: 100vh;
+    }
 }

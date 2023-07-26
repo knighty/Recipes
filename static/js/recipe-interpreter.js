@@ -1,4 +1,4 @@
-import { Tokens } from "./tokens.js";
+import { Tokenizer } from "./tokenizer.js";
 
 let i = 0;
 const tokenTypes = {
@@ -273,22 +273,7 @@ class WordNode {
 }
 
 export class RecipeInterpreter {
-    tokenize(recipe) {
-        const rules = {
-            openBrace: /\[/y,
-            closeBrace: /\]/y,
-            doubleHypen: /--/y,
-            bullet: /-/y,
-            comma: /\,/y,
-            linebreak: /(\r\n|\r|\n)/y,
-            optional: /\!optional/y,
-            key: /([^\s]+)\:\s/y,
-            measure: /(\d+\.?\d*)\-?(\d+\.?\d*)? ?(cm|g|tsp|tbsp|ml|lb|C|F|mins?|secs?|minutes?)\b/y,
-            number: /(\d+\.?\d*)\b/y,
-            word: /[^\s\]\,]+/y,
-            whitespace: /[^\S\r\n]+/y
-        }
-
+    constructor() {
         const measures = [
             // Weight
             {
@@ -378,90 +363,53 @@ export class RecipeInterpreter {
             },
         ]
 
-        let tokens = new Tokens();
+        const tokenizer = new Tokenizer();
 
-        let position = 0;
-        let i = 0;
-        while (recipe.length > position) {
-            let matched = false;
-            for (let ruleId in rules) {
-                const rule = rules[ruleId];
-                rule.lastIndex = position;
-                const matches = rule.exec(recipe);
-                let token = null;
-                if (matches) {
-                    switch (ruleId) {
-                        case "openBrace":
-                            token = { type: tokenTypes.openBrace };
-                            break;
-                        case "closeBrace":
-                            token = { type: tokenTypes.closeBrace };
-                            break;
-                        case "doubleHypen":
-                            token = { type: tokenTypes.section };
-                            break;
-                        case "bullet":
-                            token = { type: tokenTypes.bullet };
-                            break;
-                        case "comma":
-                            token = { type: tokenTypes.comma };
-                            break;
-                        case "optional":
-                            token = { type: tokenTypes.optional };
-                            break;
-                        case "linebreak":
-                            token = { type: tokenTypes.linebreak };
-                            break;
-                        case "key":
-                            token = { type: tokenTypes.key, key: matches[1].toLowerCase(), word: matches[0] };
-                            break;
-                        case "measure":
-                            const min = parseFloat(matches[1]);
-                            const max = matches[2] ? parseFloat(matches[2]) : null;
-                            const units = matches[3].toLowerCase();
-                            for (let measureType of measures) {
-                                const measureMatches = measureType.regex.exec(units);
-                                if (measureMatches) {
-                                    token = {
-                                        type: tokenTypes.measure,
-                                        measure: new Measure(min * measureType.normalize, max ? max * measureType.normalize : null, measureType.type),
-                                        word: matches[0]
-                                    };
-                                    break;
-                                }
-                            }
-                            if (token == null) {
-                                console.log(matches);
-                                throw new Error("Found a measure token with no matching measure");
-                            }
-                            break;
-                        case "word":
-                            token = { type: tokenTypes.word, word: matches[0] };
-                            break;
-                        case "number":
-                            token = { type: tokenTypes.number, number: parseFloat(matches[1]), word: matches[0] };
-                            break;
-                        case "whitespace":
-                            token = { type: tokenTypes.whitespace, whitespace: matches[0], word: matches[0] };
-                            break;
-                    }
-                    token.string = matches[0];
-                    token.position = position;
-                    token.recipe = recipe;
-                    if (token != null) {
-                        token.id = i++;
-                        tokens.push(token);
-                    }
-                    matched = true;
-                    position += matches[0].length;
-                    break;
+        tokenizer.addRule(/\[/y, (context, matches) => context.accept(tokenTypes.openBrace));
+
+        tokenizer.addRule(/\]/y, (context, matches) => context.accept(tokenTypes.closeBrace));
+
+        tokenizer.addRule(/--/y, (context, matches) => context.accept(tokenTypes.section));
+
+        tokenizer.addRule(/-/y, (context, matches) => context.accept(tokenTypes.bullet));
+
+        tokenizer.addRule(/\,/y, (context, matches) => context.accept(tokenTypes.comma));
+
+        tokenizer.addRule(/(\r\n|\r|\n)/y, (context, matches) => context.accept(tokenTypes.linebreak));
+
+        tokenizer.addRule(/\!optional/y, (context, matches) => context.accept(tokenTypes.optional));
+
+        tokenizer.addRule(/([^\s]+)\:\s/y, (context, matches) => context.accept(tokenTypes.key, { key: matches[1].toLowerCase(), word: matches[0] }));
+
+        function handleMeasure(min, max, units) {
+            for (let measureType of measures) {
+                const measureMatches = measureType.regex.exec(units);
+                if (measureMatches) {
+                    return new Measure(min * measureType.normalize, max ? max * measureType.normalize : null, measureType.type);
                 }
             }
-            if (!matched) {
-                throw new Error(`${recipe.substr(position)} didn't match any rules`);
-            }
+            throw new Error("No matching measure");
         }
 
+        tokenizer.addRule(/(\d+\.?\d*)\-?(\d+\.?\d*)? ?(cm|g|tsp|tbsp|ml|lb|C|F|mins?|secs?|minutes?)\b/y, (context, matches) => {
+            const min = parseFloat(matches[1]);
+            const max = matches[2] ? parseFloat(matches[2]) : null;
+            const units = matches[3].toLowerCase();
+
+            return context.accept(tokenTypes.measure, { word: matches[0], measure: handleMeasure(min, max, units) });
+        });
+
+        tokenizer.addRule(/(\d+\.?\d*)\b/y, (context, matches) => context.accept(tokenTypes.number, { number: parseFloat(matches[1]), word: matches[0] }));
+
+        tokenizer.addRule(/[^\s\]\,]+/y, (context, matches) => context.accept(tokenTypes.word, { word: matches[0] }));
+
+        tokenizer.addRule(/[^\S\r\n]+/y, (context, matches) => context.accept(tokenTypes.whitespace, { whitespace: matches[0], word: matches[0] }));
+
+        this.tokenizer = tokenizer;
+    }
+
+    tokenize(recipe) {
+        const tokens = this.tokenizer.parse(recipe);
         return tokens;
     }
 
@@ -476,8 +424,8 @@ export class RecipeInterpreter {
 
     error(tokens, expected) {
         const token = tokens.next();
-        const recipeBefore = token.recipe.substr(0, token.position);
-        const recipeAfter = token.recipe.substr(token.position);
+        const recipeBefore = token.input.substr(0, token.position);
+        const recipeAfter = token.input.substr(token.position);
         const lineBreaks = (recipeBefore.match(/\n/g) || []).length;
 
         throw new Error(`Unexpected ${tokenNames[token.type]} "${token.string}" on line ${lineBreaks + 1} at position ${token.position} ..."${recipeAfter.substr(0, 100)}"...`);

@@ -4,12 +4,14 @@ x-recipe-catalogue {
         animation-fill-mode: both;
     }
 
+    @media screen and (max-width: $mobile_width) {
+        overflow: auto;
+    }
+
     animation: 0.3s linear fade-in;
 
     grid-area: main;
     width: 100%;
-    //border-top: 2em solid var(--sidebar-color);
-
     max-width: calc((8.25in - 20mm) * var(--screen-scale));
     margin: 1em auto;
     display: block;
@@ -35,7 +37,7 @@ x-recipe-catalogue {
             display: block;
             content: " ";
             height: 1px;
-            background: #ccc;
+            background: var(--divider-color-light);
             flex: 1;
         }
     }

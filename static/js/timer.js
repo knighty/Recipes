@@ -1,4 +1,4 @@
-import { observableToggle, observeMouseDown, observeMouseUp } from "./utils.js";
+import { observableToggle, observeMouseDown, observeMouseUp, observeShortLongPress } from "./utils.js";
 
 export default class TimerView extends HTMLElement {
     constructor() {
@@ -14,14 +14,13 @@ export default class TimerView extends HTMLElement {
         this.running$ = observableToggle(rxjs.merge(this.setRunning$, this.reset$.pipe(rxjs.operators.mapTo(false))), this.toggleRunning$);
 
         const oneSecondTimer$ = rxjs.interval(1000).pipe(rxjs.operators.mapTo(-1));
-        this.timer$ = rxjs.merge(
-            rxjs.merge(
-                this.running$.pipe(rxjs.operators.switchMap(running => running ? oneSecondTimer$ : rxjs.empty())),
-                this.addTime$
-            ).pipe(rxjs.operators.map(seconds => current => current + seconds)),
-            this.setTimer$.pipe(rxjs.operators.map(seconds => () => seconds)),
-            this.reset$.pipe(rxjs.operators.map(seconds => () => 0))
-        ).pipe(
+        const setTimer$ = this.setTimer$.pipe(rxjs.operators.map(seconds => () => seconds));
+        const resetTimer$ = this.reset$.pipe(rxjs.operators.map(() => () => 0));
+        const countdownTimer$ = this.running$.pipe(rxjs.operators.switchMap(running => running ? oneSecondTimer$ : rxjs.empty()));
+        const modulateTimer$ = rxjs.merge(countdownTimer$, this.addTime$).pipe(
+            rxjs.operators.map(seconds => current => current + seconds)
+        );
+        this.timer$ = rxjs.merge(modulateTimer$, setTimer$, resetTimer$).pipe(
             rxjs.operators.scan((a, c) => Math.max(0, c(a)), 0),
             rxjs.operators.distinctUntilChanged(),
             rxjs.operators.takeUntil(this.disconnected$),
@@ -29,7 +28,9 @@ export default class TimerView extends HTMLElement {
         );
 
         this.finished$ = this.timer$.pipe(
-            rxjs.operators.filter(time => time == 0),
+            rxjs.operators.pairwise(),
+            rxjs.operators.filter(([previous, current]) => (current == 0 && previous == 1)),
+            rxjs.operators.tap(() => this.setRunning$.next(false)),
             rxjs.operators.share()
         );
 
@@ -52,8 +53,9 @@ export default class TimerView extends HTMLElement {
                 <span data-element="startStop">Stop</span>
                 <span>Reset</span>
             </button>
-            <button name="add10s">+10s</button>
-            <button name="add1min">+1m</button>
+            <button name="add10s">10s</button>
+            <button name="add1min">1m</button>
+            <button name="close">X</button>
         `;
 
         const timerElement = this.querySelector("[data-element=time]");
@@ -61,6 +63,7 @@ export default class TimerView extends HTMLElement {
         const stopText = this.querySelector("[data-element=startStop]");
         const add10sButton = this.querySelector("[name=add10s]");
         const add1minButton = this.querySelector("[name=add1min]");
+        const closeButton = this.querySelector("[name=close]");
 
         const click = () => {
             //const a = new Audio('/static/sounds/click.mp3');
@@ -68,19 +71,8 @@ export default class TimerView extends HTMLElement {
             this.sounds.click.play();
         }
 
+        const [shortPressStop$, longPressStop$] = observeShortLongPress(stopButton);
 
-        const clickStopButton$ = observeMouseDown(stopButton).pipe(
-            rxjs.operators.tap(click),
-            rxjs.operators.switchMap(() => rxjs.race(
-                rxjs.timer(1000).pipe(rxjs.operators.mapTo(true)),
-                observeMouseUp(stopButton).pipe(rxjs.operators.mapTo(false))
-            )),
-            rxjs.operators.share()
-        );
-
-        const shortPressStop$ = clickStopButton$.pipe(rxjs.operators.filter(longPress => !longPress));
-        const longPressStop$ = clickStopButton$.pipe(rxjs.operators.filter(longPress => longPress));
-        
         const clickAdd10SecButton$ = observeMouseDown(add10sButton).pipe(
             rxjs.operators.switchMap(e => rxjs.timer(500).pipe(
                 rxjs.operators.switchMap(e => rxjs.interval(200)),
@@ -111,10 +103,12 @@ export default class TimerView extends HTMLElement {
             ),
 
             shortPressStop$.pipe(
+                rxjs.operators.tap(click),
                 rxjs.operators.tap(() => this.toggleRunning$.next(false))
             ),
 
             longPressStop$.pipe(
+                rxjs.operators.tap(click),
                 rxjs.operators.tap(() => this.reset$.next())
             ),
 
@@ -123,6 +117,10 @@ export default class TimerView extends HTMLElement {
                     this.sounds.alarm.play();
                 })
             ),
+
+            rxjs.fromEvent(closeButton, "click").pipe(
+                rxjs.operators.tap(() => this.parentNode.removeChild(this))
+            )
         ).pipe(rxjs.operators.takeUntil(this.disconnected$)).subscribe();
 
     }

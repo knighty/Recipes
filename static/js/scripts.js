@@ -11,10 +11,11 @@ customElements.define("x-recipe-catalogue", RecipeCatalogueView);
 
 customElements.define("x-toolbar", class extends HTMLElement {
     connectedCallback() {
-        this.innerHTML = `<button name='settings'><i class="fa fa-cogs"></i> Settings</button>`;
+        this.innerHTML = `<button name='settings'><i class="fa fa-cogs"></i> Settings</button><button name="reload"><i class="fa fa-refresh"></i> Reload</button>`;
         rxjs.fromEvent(this.querySelector("[name=settings]"), "click").pipe(
             rxjs.operators.map(e => e.target.value)
         ).subscribe(() => document.querySelector("x-settings").toggle())
+        rxjs.fromEvent(this.querySelector("[name=reload]"), "click").pipe().subscribe(() => document.location.reload())
     }
 });
 

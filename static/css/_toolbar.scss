@@ -1,10 +1,13 @@
 x-toolbar {
+    display: flex;
     grid-area: toolbar;
     color: #eee;
     display: block;
-    background: #4e342e;
+    background: darken($sidebar_color, 10%);
     padding: 0.5em;
-    border-bottom: 1px solid #8d6e63;
+    border-bottom: 1px solid lighten($sidebar_color, 10%);
+    align-items: center;
+    //gap: 1em;
 
     select {
         background: #fff;
@@ -18,11 +21,21 @@ x-toolbar {
     }
 
     button {
-        background: #8d6e63;
+        background: lighten($sidebar_color, 20%);
         color: #ffffff;
-        padding: 0.2em 0.5em;
-        border-radius: 0.2em;
+        //padding: 0.2em 0.5em;
+        border-radius: var(--radius-small);
         font-weight: bold;
-        border: 1px solid #ab8e88;
+        border: 1px solid lighten($sidebar_color, 30%);
+
+        background: none;
+        border: none;
+
+        &:not(:last-child) {
+            &:after {
+                content: "•";
+                margin: 0 1em;
+            }
+        }
     }
 }

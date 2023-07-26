@@ -132,10 +132,18 @@ html {
   --page-height: var(--a4-height);
   --page-margin: 0.5in;
   --screen-scale: 1;
+  --background-color: #fff;
+  --divider-color-light: #ddd;
+  --text-color-strong: #090909;
+  --text-color: #555;
   --sidebar-color: #795548;
   --accent-color: #009688;
   --accent-color-2: #009688;
-  font-size: calc(11pt * var(--screen-scale)); }
+  --radius-medium: 0.5rem;
+  --radius-small: calc(var(--radius-medium) * 0.6);
+  --radius-large: calc(var(--radius-medium) * 1.5);
+  --base-font-size: 11pt;
+  font-size: calc(var(--base-font-size) * var(--screen-scale)); }
   @media screen {
     html {
       --screen-scale: 1.3;
@@ -183,73 +191,161 @@ x-app {
   overflow-x: hidden;
   overflow-y: hidden;
   min-height: 100vh; }
+  @media screen and (max-width: 1000px) {
+    x-app {
+      min-height: 100vh;
+      height: 100vh; } }
 
 @keyframes settings-popup {
   from {
     opacity: 0;
-    transform: translateY(5em); }
+    transform: translate(-50%, 5em); }
   to {
     opacity: 0;
-    transform: translateY(5em); } }
+    transform: translate(-50%, 5em); } }
 x-settings {
-  z-index: 100; }
-  x-settings:not(.visible) {
-    display: none; }
-  x-settings:before {
-    content: " ";
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0);
-    transition: background-color 0.3s; }
-  x-settings .popup {
+    /*.imperial-metric-checkbox {
+        &:after {
+            content: "Imperial";
+        }
+
+        &:has(input:checked) {
+            &:after {
+                content: "Metric";
+            }
+        }
+    }*/ }
+  x-settings dialog {
     position: fixed;
-    background: #fff;
-    padding: 0 1em;
-    border-radius: 0.4em;
+    border-radius: var(--radius-medium);
     top: 1em;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-    left: calc(50% - 20em);
-    width: 40em;
+    left: 50%;
+    width: 35em;
+    max-width: 90vw;
     opacity: 0;
-    transform: translateY(3em);
-    transition: opacity 0.3s, transform 0.3s; }
-  x-settings.showing:before {
-    background-color: rgba(0, 0, 0, 0.6); }
-  x-settings.showing .popup {
-    opacity: 1;
-    transform: translateY(0em); }
-  x-settings h1 {
+    transform: translate(-50%, 3em);
+    transition: opacity 0.3s, transform 0.3s;
+    background-color: transparent; }
+    x-settings dialog:not([open]) {
+      display: none; }
+    x-settings dialog::backdrop {
+      position: fixed;
+      inset: 0px;
+      background: rgba(0, 0, 0, 0);
+      transition: background 0.3s; }
+    x-settings dialog.showing {
+      opacity: 1;
+      transform: translate(-50%, 0em); }
+      x-settings dialog.showing::backdrop {
+        background: rgba(0, 0, 0, 0.3); }
+  x-settings article {
+    display: flow-root;
+    padding: 0 1rem;
+    background-color: #fff;
+    border-bottom-left-radius: var(--radius-medium);
+    border-bottom-right-radius: var(--radius-medium); }
+  x-settings header {
+    border-top-right-radius: var(--radius-medium);
+    border-top-left-radius: var(--radius-medium);
+    padding: 0.7rem 0.7rem;
     display: flex;
-    margin: 1rem 0;
-    font-size: 1.5em;
+    font-size: 1.1em;
     font-family: "Comic Neue";
     font-weight: bold;
     gap: 0.5em;
-    align-items: center; }
-    x-settings h1 button {
-      order: 2; }
-    x-settings h1:after {
+    align-items: center;
+    background-color: var(--sidebar-color);
+    color: #fff; }
+    x-settings header button {
+      order: 2;
+      border-radius: 0.2em;
+      background-color: var(--accent-color);
+      color: #fff;
+      font-weight: bold;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      width: 1.2em;
+      height: 1.2em; }
+    x-settings header:after {
       display: block;
       content: " ";
       height: 0.2em;
       background: #ccc;
+      background: #996b5b;
       border-radius: 0.2em;
       flex: 1;
       order: 1; }
-  x-settings label {
-    display: grid;
-    grid-template-columns: 10em 1fr;
+  x-settings select,
+  x-settings input[type="numeric"],
+  x-settings input[type="text"],
+  x-settings textarea {
+    width: 100%;
+    box-shadow: 0px 0px 0px 1px #fff inset, 0px 0px 6px rgba(0, 0, 0, 0.1) inset;
+    border-radius: var(--radius-small);
+    border: 1px solid #ccc;
+    padding: 0.5em 0.5em; }
+    x-settings select:disabled,
+    x-settings input[type="numeric"]:disabled,
+    x-settings input[type="text"]:disabled,
+    x-settings textarea:disabled {
+      color: #888;
+      background-color: #eee; }
+    x-settings select:focus,
+    x-settings input[type="numeric"]:focus,
+    x-settings input[type="text"]:focus,
+    x-settings textarea:focus {
+      border-color: #aaa;
+      background: #f8f8f8; }
+  x-settings textarea {
+    height: 5em; }
+  x-settings .checkbox {
+    display: flex;
     align-items: center;
-    margin: 1em 0; }
+    gap: 0.5em; }
+    x-settings .checkbox input {
+      display: none; }
+    x-settings .checkbox:before {
+      font-family: "FontAwesome";
+      content: " ";
+      display: inline-block;
+      width: 1.5em;
+      height: 1.5em;
+      text-align: center;
+      line-height: 1.5em;
+      border: 1px solid var(--divider-color-light);
+      border-radius: var(--radius-small); }
+    x-settings .checkbox:after {
+      content: attr(data-text-off); }
+    x-settings .checkbox:has(input:checked):after {
+      content: attr(data-text-on); }
+    x-settings .checkbox:has(input:checked):before {
+      content: "\f00c";
+      background-color: var(--accent-color);
+      border-color: rgba(0, 0, 0, 0.3);
+      color: #fff; }
+  x-settings article > label {
+    display: grid;
+    grid-template-columns: var(--label-width) 1fr;
+    gap: 1em;
+    align-items: center;
+    margin: 1em 0;
+    --label-width: 10em;
+    white-space: nowrap; }
+    x-settings article > label:has([type="range"]) {
+      grid-template-columns: var(--label-width) 1fr 4em; }
+    x-settings article > label input[type="range"] {
+      min-width: 1em; }
+    x-settings article > label:has(input[type="checkbox"]) {
+      grid-template-columns: var(--label-width) min-content; }
+    @media all and (max-width: 1000px) {
+      x-settings article > label {
+        --label-width: minmax(min-content, 4em); } }
 
 @font-face {
   font-family: "7segment";
   src: url("/static/fonts/7segment.woff") format("woff"); }
 x-timer {
+  --radius: 1rem;
   position: fixed;
   bottom: 1em;
   left: 50%;
@@ -258,14 +354,14 @@ x-timer {
   border: 1px solid rgba(0, 0, 0, 0.6);
   background-color: var(--accent-color);
   z-index: 1000;
-  border-radius: 0.5em;
+  border-radius: calc(var(--radius) + 0.5em);
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0px 0px 0px 2px #24c7b8 inset;
   color: #333;
   display: grid;
   gap: 0.5em;
   grid-template-columns: 1fr 5em min-content;
   grid-template-rows: 1fr 1fr;
-  grid-template-areas: "timer stop min" "timer stop sec";
+  grid-template-areas: "timer stop min close" "timer stop sec close";
   user-select: none; }
   @media print {
     x-timer {
@@ -277,7 +373,7 @@ x-timer {
     border: 0px solid rgba(0, 0, 0, 0.26);
     padding: 0 0.7em;
     font-weight: bold;
-    border-radius: 0.5rem;
+    border-radius: var(--radius);
     background-clip: padding-box;
     text-shadow: -1px -1px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 0px 1px #4cbdb2 inset, 2px 2px 1px #00000026;
@@ -303,9 +399,11 @@ x-timer {
       grid-area: sec; }
     x-timer button[name="add1min"] {
       grid-area: min; }
+    x-timer button[name="close"] {
+      grid-area: close; }
   x-timer .time {
     padding: 0.1em 0.2em;
-    border-radius: 0.5rem;
+    border-radius: var(--radius);
     background-color: #444;
     font-family: "7segment", sans-serif;
     font-size: 4em;
@@ -332,12 +430,14 @@ x-timer {
       text-shadow: 0px 0px 7px black; }
 
 x-toolbar {
+  display: flex;
   grid-area: toolbar;
   color: #eee;
   display: block;
-  background: #4e342e;
+  background: #593f35;
   padding: 0.5em;
-  border-bottom: 1px solid #8d6e63; }
+  border-bottom: 1px solid #996b5b;
+  align-items: center; }
   x-toolbar select {
     background: #fff;
     border-color: #8d6e63;
@@ -347,16 +447,26 @@ x-toolbar {
     x-toolbar {
       display: none; } }
   x-toolbar button {
-    background: #8d6e63;
+    background: #af8778;
     color: #ffffff;
-    padding: 0.2em 0.5em;
-    border-radius: 0.2em;
+    border-radius: var(--radius-small);
     font-weight: bold;
-    border: 1px solid #ab8e88; }
+    border: 1px solid #c2a398;
+    background: none;
+    border: none; }
+    x-toolbar button:not(:last-child):after {
+      content: "•";
+      margin: 0 1em; }
 
 x-recipe {
   grid-area: main;
   line-height: 1.25em; }
+  @media screen and (max-width: 1000px) {
+    x-recipe {
+      min-height: 0; }
+      x-recipe main,
+      x-recipe aside {
+        overflow: auto; } }
   @media (min-width: 1000px), print {
     x-recipe {
       display: grid;
@@ -378,7 +488,7 @@ x-recipe {
         grid-row-start: 2;
         border-top-right-radius: 3em;
         content: " ";
-        background: #fff;
+        background: var(--background-color);
         transform: translateX(0); }
       x-recipe:before {
         grid-column-start: 2;
@@ -397,8 +507,9 @@ x-recipe {
     x-recipe {
       display: flex;
       overflow-x: auto;
-      scroll-snap-type: x mandatory; }
+      scroll-snap-type: both mandatory; }
       x-recipe main {
+        font-size: 1.1em;
         scroll-snap-align: center;
         flex-shrink: 0;
         width: 100vw;
@@ -406,6 +517,7 @@ x-recipe {
         position: relative;
         padding: 0 1em; }
       x-recipe aside {
+        font-size: 1.2em;
         scroll-snap-align: center;
         flex-shrink: 0;
         width: 100vw;
@@ -478,6 +590,12 @@ x-recipe {
         flex: 0;
         order: -1;
         flex-basis: 1em; }
+    x-recipe aside button {
+      border: 2px solid currentColor;
+      color: #d7ccc8;
+      padding: 0.5em;
+      border-radius: 100em;
+      background: rgba(0, 0, 0, 0.1); }
   x-recipe h1 {
     display: flex;
     gap: 0.5em;
@@ -485,7 +603,7 @@ x-recipe {
     margin-bottom: 0.5em;
     font-size: 2em;
     align-items: center;
-    color: #333;
+    color: var(--text-color-strong);
     line-height: 1em; }
     @media (min-width: 1000px), print {
       x-recipe h1 {
@@ -494,13 +612,14 @@ x-recipe {
           display: block;
           content: " ";
           height: 0.2em;
-          background: #ccc;
+          background: var(--divider-color-light);
           border-radius: 0.2em;
           flex: 1;
           order: 1; } }
     x-recipe h1 .button {
       margin-left: auto;
-      order: 2; }
+      order: 2;
+      border-color: var(--divider-color-light); }
       @media print {
         x-recipe h1 .button {
           display: none; } }
@@ -527,11 +646,11 @@ x-recipe {
     border-bottom: 3px solid #8d4365; }
   x-recipe .description {
     background: var(--accent-color);
-    box-shadow: 0 0 0 0.2em #fff inset;
+    box-shadow: 0 0 0 0.2em var(--background-color) inset;
     border: 0.2em solid var(--accent-color);
     padding: 1em;
     color: #fff;
-    border-radius: 1em;
+    border-radius: var(--radius-large);
     margin: 1em 0;
     padding: 0 1em;
     display: flex; }
@@ -660,7 +779,7 @@ x-recipe {
       x-recipe .steps section.reading {
         background: linear-gradient(to right, rgba(255, 249, 196, 0), #fff9c4, rgba(255, 249, 196, 0)); }
       x-recipe .steps section:not(:last-child) .text {
-        border-bottom: 1px solid #ccc; }
+        border-bottom: 1px solid var(--divider-color-light); }
       x-recipe .steps section:first-child .duration:before {
         border-top-left-radius: 100em;
         border-top-right-radius: 100em; }
@@ -730,7 +849,7 @@ x-recipe {
         font-weight: bold;
         color: #000; }
   x-recipe .ingredients {
-    line-height: 1.8em; }
+    line-height: 1.3em; }
     x-recipe .ingredients * {
       opacity: 0;
       animation: 0.35s linear slide-in;
@@ -837,29 +956,41 @@ x-recipe {
     x-recipe .ingredients *:nth-child(50) {
       animation-delay: 1s; }
     x-recipe .ingredients label {
-      display: block;
+      display: flex;
+      align-items: center;
       gap: 0.5em;
-      align-items: center; }
+      margin: 0.5em 0; }
+      x-recipe .ingredients label > span {
+        flex: 1; }
       x-recipe .ingredients label i,
       x-recipe .ingredients label input {
         font-size: 1.5em; }
       x-recipe .ingredients label input {
         display: none;
         width: 0em;
-        height: 0em; }
-        x-recipe .ingredients label input + span {
-          display: inline-block;
-          display: none;
-          content: " ";
-          width: 0.5em;
-          height: 0.5em;
-          background: #977a6f;
-          border-radius: 100%; }
-        x-recipe .ingredients label input:checked + span {
-          background: white;
-          content: "✓";
-          width: initial;
-          height: initial; }
+        height: 0em;
+                /*& + span {
+                    display: inline-block;
+                    display: none;
+                    content: " ";
+                    width: 0.5em;
+                    height: 0.5em;
+                    background: $sidebar_color_light;
+                    //border: 1px solid $sidebar_color;
+                    border-radius: 100%;
+                }
+
+                &:checked + span {
+                    background: $sidebar_color_strong;
+                    content: "✓";
+                    width: initial;
+                    height: initial;
+                }*/ }
+      x-recipe .ingredients label:has(input:checked) {
+        color: white; }
+        x-recipe .ingredients label:has(input:checked):after {
+          font-family: "fontawesome";
+          content: "\f14a"; }
     x-recipe .ingredients .optional:after {
       content: "Opt.";
       color: #977a6f;
@@ -880,6 +1011,9 @@ x-recipe-catalogue {
     animation-fill-mode: both; }
   @media screen and (max-width: 1000px) {
     x-recipe-catalogue {
+      overflow: auto; } }
+  @media screen and (max-width: 1000px) {
+    x-recipe-catalogue {
       padding: 1em; } }
   x-recipe-catalogue h1 {
     margin: 0.5em 0;
@@ -892,7 +1026,7 @@ x-recipe-catalogue {
       display: block;
       content: " ";
       height: 1px;
-      background: #ccc;
+      background: var(--divider-color-light);
       flex: 1; }
   x-recipe-catalogue ul {
     --item-width: 12em;
@@ -933,14 +1067,18 @@ x-recipe-catalogue {
       x-recipe-catalogue .filter label.group {
         margin-left: auto; }
 
-html, body {
+.hidden {
+  display: none !important; }
+
+html,
+body {
   overscroll-behavior: none; }
 
 body {
   font-family: "Comic Neue";
   color: #555;
   background-size: 100em;
-  background-color: #ffffff; }
+  background-color: var(--background-color); }
 
 h1,
 h2,
@@ -949,7 +1087,8 @@ h3 {
 
 select,
 button,
-input {
+input,
+textarea {
   font-family: inherit;
   font-size: 1em; }
 

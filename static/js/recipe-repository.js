@@ -11,11 +11,12 @@ export default class RecipeRepository {
             return ascii;
         }
 
+        let i = 0;
         const sources$ = rxjs.from(config.sources).pipe(
             rxjs.operators.mergeMap(source => rxjs.ajax.ajax({
                 url: source,
                 responseType: 'text'
-            })),
+            })),//.pipe(rxjs.operators.delay(i++ * 3000))),
             rxjs.operators.map(response => response.response),
             rxjs.operators.map(text => text.split(/\-{5}/))
         );
@@ -30,12 +31,15 @@ export default class RecipeRepository {
                 //console.log(visitor.recipe);
                 return visitor.recipe;
             })),
-            rxjs.operators.tap(recipes => recipes.map((recipe, id) => {
+            rxjs.operators.tap(recipes => recipes.map(recipe => {
                 recipe.id = nameToId(recipe.name);
                 return recipe;
             })),
             rxjs.operators.tap(_ => console.log(`Processed ${_.length} recipes`)),
+            //rxjs.operators.concatMap(recipes => rxjs.from(recipes)),
+            //rxjs.operators.bufferTime(1),
             rxjs.operators.reduce((a, c) => [...a, ...c], []),
+            rxjs.operators.tap(_ => console.log(`Total ${_.length} recipes`)),
             rxjs.operators.shareReplay(1)
         )
 

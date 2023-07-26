@@ -1,1 +1,3 @@
 /.sass-cache
+/static/css/*.css
+/static/css/*.map

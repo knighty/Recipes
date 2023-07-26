@@ -8,6 +8,8 @@ x-timer {
         display: none !important;
     }
 
+    --radius: 1rem;
+
     position: fixed;
     bottom: 1em;
     left: 50%;
@@ -16,7 +18,7 @@ x-timer {
     border: 1px solid rgba(0, 0, 0, 0.6);
     background-color: var(--accent-color);
     z-index: 1000;
-    border-radius: 0.5em;
+    border-radius: calc(var(--radius) + 0.5em);
     //background-clip: padding-box;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0px 0px 0px 2px #24c7b8 inset;
     color: #333;
@@ -25,8 +27,8 @@ x-timer {
     grid-template-columns: 1fr 5em min-content;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
-        "timer stop min"
-        "timer stop sec";
+        "timer stop min close"
+        "timer stop sec close";
     user-select: none;
 
     button {
@@ -36,7 +38,7 @@ x-timer {
         border: 0px solid rgba(0, 0, 0, 0.26);
         padding: 0 0.7em;
         font-weight: bold;
-        border-radius: 0.5rem;
+        border-radius: var(--radius);
         background-clip: padding-box;
         text-shadow: -1px -1px rgba(0, 0, 0, 0.25);
         box-shadow: 0px 0px 0px 1px #4cbdb2 inset, 2px 2px 1px #00000026;
@@ -77,11 +79,15 @@ x-timer {
         &[name="add1min"] {
             grid-area: min;
         }
+
+        &[name="close"] {
+            grid-area: close;
+        }
     }
 
     .time {
         padding: 0.1em 0.2em;
-        border-radius: 0.5rem;
+        border-radius: var(--radius);
         background-color: #444;
         font-family: "7segment", sans-serif;
         font-size: 4em;

@@ -1,6 +1,7 @@
+import { goToPage$, observePreviousPage } from "../history.js";
 import HTMLContext from "../html-context.js";
 import PlainTextContext from "../plain-text-context.js";
-import { escapeHtml, groupArray, observeScopedEvent } from "../utils.js";
+import { escapeHtml, groupArray, observeMouseMove, observeScopedEvent } from "../utils.js";
 import { selectedVoice$ } from "../voice.js";
 
 export default class RecipeView extends HTMLElement {
@@ -44,7 +45,7 @@ export default class RecipeView extends HTMLElement {
         this.innerHTML = `
             <div class="top-bar"></div>
             <main>
-                <h1>${recipe.name} <a class="button" href="/">Back</a></h1>
+                <h1>${recipe.name} <button class="button" name="back">Back</button></h1>
                 <ul class="meta">
                     ${recipe.duration ? `<li><img src="/static/images/duration-coloured.png"></img><span>${recipe.duration.min / 60} mins</span></li>` : ``} 
                     <li><img src="/static/images/servings-coloured.png"></img><span>Serves ${recipe.serves}</span></li>
@@ -58,6 +59,7 @@ export default class RecipeView extends HTMLElement {
                 ${recipe.image ? `<img class="image" src="${recipe.image}" />` : ``}
                 <h1>Ingredients</h1>
                 <div class="ingredients" data-element="ingredients"></div>
+                <button name="deselect">Deselect All</button>
             </aside>
         `;
         //<li><img src="images/calories-coloured.png"></img><span>~${recipe.calories}kcal</span></li>
@@ -65,6 +67,8 @@ export default class RecipeView extends HTMLElement {
             ingredients: this.querySelector(`[data-element="ingredients"]`),
             steps: this.querySelector(`[data-element="steps"]`),
         };
+
+        //observeMouseMove(this.elements.ingredients).pipe(rxjs.operators.tap(console.log)).subscribe();
 
         // Steps
         this.elements.steps.innerHTML = recipe.steps.map((step, index) => {
@@ -79,7 +83,7 @@ export default class RecipeView extends HTMLElement {
         // Ingredients
         this.elements.ingredients.innerHTML = Object.entries(recipe.ingredients.group(ingredient => ingredient.category)).map(([group, items]) => `
             ${group != "-" ? `<h2>${group}</h2>` : ``}
-            ${items.map(ingredient => `<label${ingredient.optional ? ` class="optional"` : ``}><input type="checkbox" /><span></span>${ingredient.html}</label>`).join("")}
+            ${items.map(ingredient => `<label${ingredient.optional ? ` class="optional"` : ``}><input type="checkbox" /><span>${ingredient.html}</span></label>`).join("")}
             `).join("");
 
         function read(step, line) {
@@ -109,8 +113,29 @@ export default class RecipeView extends HTMLElement {
             rxjs.operators.map(([element, e]) => [element, element.dataset.text])
         );
 
-        readStep$.pipe(
-            rxjs.operators.switchMap(([element, line]) => read(element, line)),
+        const clickDeselect$ = rxjs.fromEvent(this.querySelector("[name=deselect]"), "click").pipe(
+            rxjs.operators.tap(() => [...this.elements.ingredients.querySelectorAll("input")].filter(c => c.checked).forEach(c => c.checked = false)),
+        );
+
+        rxjs.merge(
+            readStep$.pipe(
+                rxjs.operators.switchMap(([element, line]) => read(element, line)),
+            ),
+
+            rxjs.fromEvent(this.querySelector("[name=back]"), "click").pipe(
+                rxjs.operators.withLatestFrom(
+                    observePreviousPage("/"),
+                    (e, previousIsCatalogue) => previousIsCatalogue
+                ),
+                rxjs.operators.tap(previousIsCatalogue => previousIsCatalogue ? history.back() : goToPage$.next(["/", {}]))
+            ),
+
+            rxjs.merge(clickDeselect$, observeScopedEvent(this.elements.ingredients, "input", "input")).pipe(
+                rxjs.operators.map(e => [...this.elements.ingredients.querySelectorAll("input")].reduce((a, c) => c.checked || a, false)),
+                rxjs.operators.startWith(false),
+                rxjs.operators.tap(anyChecked => this.querySelector("[name=deselect]").classList.toggle("hidden", !anyChecked))
+            )
+        ).pipe(
             rxjs.operators.takeUntil(this.disconnected$)
         ).subscribe();
     }

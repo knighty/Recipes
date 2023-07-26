@@ -1,5 +1,7 @@
 import RecipeRepository from "./recipe-repository.js";
-import { observeScopedEvent } from "./utils.js";
+import { observeScopedEvent, debounceAfterFirst, observeMouseMove } from "./utils.js";
+import { readConfig } from "./config.js";
+import { currentPage$, goToPage$ } from "./history.js";
 
 const recipeRepository = new RecipeRepository();
 
@@ -54,7 +56,7 @@ export default class App extends HTMLElement {
 
         const baseURI = document.location.origin;
 
-        const clickedLink$ =
+        /*const clickedLink$ =
             rxjs.fromEvent(document, "click").pipe(
                 rxjs.operators.filter(e => e.target.tagName == "A" && e.target.href.startsWith(baseURI)),
                 rxjs.operators.tap(e => e.preventDefault()),
@@ -105,6 +107,35 @@ export default class App extends HTMLElement {
                 throw new Error(`Non matching route "${path}"`);
             }),
             rxjs.operators.switchMap(route => route)
+        ).subscribe();*/
+
+        const clickedLink$ =
+            rxjs.fromEvent(document, "click").pipe(
+                rxjs.operators.filter(e => e.target.tagName == "A" && e.target.href.startsWith(baseURI)),
+                rxjs.operators.tap(e => e.preventDefault()),
+                rxjs.operators.map(e => e.target.href),
+                rxjs.operators.tap(href => goToPage$.next([href.substr(baseURI.length), {}]))
+            );
+
+        clickedLink$.subscribe();
+
+        currentPage$.pipe(
+            rxjs.operators.distinctUntilChanged(((a, b) => a.uri == b.uri)),
+            rxjs.operators.map(e => {
+                const path = e.uri;
+                const state = e.state;
+
+                console.log(`Navigating to "${path}" with "${JSON.stringify(state)}"`);
+
+                for (let route of routes) {
+                    const matches = route.route.exec(path);
+                    if (matches) {
+                        return route.handler(state, ...matches);
+                    }
+                }
+                throw new Error(`Non matching route "${path}"`);
+            }),
+            rxjs.operators.switchMap(route => route)
         ).subscribe();
 
         observeScopedEvent(document, "click", "[data-timer]", true).pipe(
@@ -124,6 +155,8 @@ export default class App extends HTMLElement {
                 )*/
             }),
         ).subscribe();
+
+        readConfig("fontSize", 11).pipe(debounceAfterFirst(500)).subscribe(fontSize => document.documentElement.style.setProperty('--base-font-size', `${fontSize}pt`));
 
         /* rxjs.fromEvent(window, "hashchange").pipe(
             rxjs.operators.map(e => e.newURL),

@@ -1,4 +1,4 @@
-import { observeInput } from "../utils.js";
+import { debounceAfterFirst, observeInput } from "../utils.js";
 
 export default class RecipeCatalogueView extends HTMLElement {
     constructor() {
@@ -64,9 +64,7 @@ export default class RecipeCatalogueView extends HTMLElement {
         );
 
         const search$ = rxjs.merge(
-            observeInput(searchInput, "input").pipe(
-                rxjs.operators.debounceTime(300)
-            ),
+            observeInput(searchInput, "input").pipe(debounceAfterFirst(300)),
             this.search$
         ).pipe(
             rxjs.operators.startWith(searchInput.value),
@@ -116,27 +114,20 @@ export default class RecipeCatalogueView extends HTMLElement {
                         orderingFunc = (a, b) => (a.duration || 0) - (b.duration || 0);
                         break;
                 }
-                const sortedRecipes = recipes.sort(orderingFunc);
-                let id = 0;
-                for (let recipe of sortedRecipes) {
-                    groups[groupingFunc(recipe)] ??= { recipes: [], name: groupingFunc(recipe), id: id++ };
-                    groups[groupingFunc(recipe)].recipes.push(recipe);
-                }
-                return groups;
+                return recipes.sort(orderingFunc).orderedGroup(groupingFunc);
             }),
             rxjs.operators.map(groups => {
-                for (const group in groups) {
-                    groups[group].recipes.sort(((a, b) => a.name.localeCompare(b.name)));
+                for (const group of groups) {
+                    group.items.sort(((a, b) => a.name.localeCompare(b.name)));
                 }
-                const sortedGroups = Object.values(groups).sort((a, b) => a.id - b.id);
-                return sortedGroups;
+                return groups;
             }),
             rxjs.operators.takeUntil(this.disconnected$)
         ).subscribe(groups => {
             let html = "";
             let num = 1;
             for (const group of groups) {
-                html += `<h1><span>${group.name}</span></h1><ul>${group.recipes.map(recipe => `<li><a href="/recipe/${recipe.id}">${recipe.name}</a></li>`).join("")}</ul>`;
+                html += `<h1><span>${group.group}</span></h1><ul>${group.items.map(recipe => `<li><a href="/recipe/${recipe.id}">${recipe.name}</a></li>`).join("")}</ul>`;
             };
             recipesList.innerHTML = html;
         });
