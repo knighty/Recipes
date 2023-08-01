@@ -220,7 +220,10 @@ Slowly add the [milk], whisking all the time for 6-8 minutes until the sauce has
 Remove from the heat, stir in 20g of [parmesan] and season with [salt] and [pepper].
 
 To assemble, spread some of the béchamel sauce over the bottom of the oven dish and add two layers in the following order: 
-Order: [lasagne sheets] -> [béchamel sauce] -> [grated cheese] -> [meat sauce]
+1. Lasagne sheets
+2. Béchamel sauce
+3. Grated cheese
+4. Meat sauce
 Add the final layer of [lasagne sheets] and spread over the remaining [béchamel sauce].
 Cover with the remaining [grated cheese].
 
@@ -236,7 +239,7 @@ meat: Salmon
 intensity: 1
 serves: 4
 duration: 20 minutes
-description: A sweet and savoury Salmon dish that's quick and simple to make. Can be served with rice, <recipe:egg-fried-rice> or just about anything else.
+description: A sweet and savoury Salmon dish that's quick and simple to make. Can be served with [egg-fried rice](recipe://egg-fried-rice) or just about anything else.
 
 -- Ingredients
 - 1lb Fresh Salmon
@@ -247,7 +250,7 @@ description: A sweet and savoury Salmon dish that's quick and simple to make. Ca
 - [Sauce] 1/4 Cup Honey
 - [Sauce] 1/4tsbp Garlic Powder
 - [Sauce] 1/2tbsp, Cornstarch
-- [Side] 300g Egg Fried Rice
+- [Side] 300g [Egg Fried Rice](recipe://egg-fried-rice)
 
 -- Steps
 Tip: Take the [salmon] out of the fridge 15-20 minutes prior to cooking to let it reach room temperature.

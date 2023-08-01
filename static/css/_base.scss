@@ -42,6 +42,7 @@ html {
     --sidebar-color: #{$sidebar_color};
     --accent-color: #{$accent_color};
     --accent-color-2: #{$accent_color_2};
+    --text-color-link: #{$accent_color};
 
     --radius-medium: 0.5rem;
     --radius-small: calc(var(--radius-medium) * 0.6);
@@ -96,6 +97,10 @@ h3 {
     font-family: $font_header;
 }
 
+button {
+    cursor: pointer;
+}
+
 select,
 button,
 input,
@@ -109,6 +114,11 @@ select {
     border: 1px solid #aaa;
     background: transparent;
     border-radius: 0.4em;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
 }
 
 .button {

@@ -31,7 +31,7 @@ image: https://carameltintedlife.com/wp-content/uploads/2020/11/Chicken-Korma-1-
 -- Steps
 [10 minutes]
 Cut each [chicken breast] into small chunks (roughly 2.5cm) and season generously with [freshly ground black pepper].
-Dice the [onion] or cut into rings if blending later.
+Dice the [onion] or cut into rings if blending later. [Link to resource!](recipe://lasagne)
 
 [5 minutes]
 Heat [1 tbsp oil] in a large nonstick frying pan or wok and fry the chicken over a medium high heat for 5-6 mins, turning occassionally.
@@ -40,9 +40,13 @@ Keep the chicken warm by covering in foil or placing in the oven on a low heat.
 
 [10 minutes]
 Add the remaining [1 tbsp oil], [butter] and [onions] to the pan and cook over a medium heat, stirring often for 10 mins or until the onions are soft and lightly browned.
+1. Bullet 1
+2. Bullet 2
 
 [1 minute]
 Stir in the [ginger and garlic paste] and [ground spices] and cook, stirring continuously for a further 90 secs.
+- Bullet 1 [Test]
+- Bullet 2
 
 [8 minutes]
 Add the [mango chutney] and [stock] to the spiced onions and bring to a simmer.

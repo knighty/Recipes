@@ -1,0 +1,20 @@
+$font_body: "Comic Neue"; // "Bitter";
+$font_header: "Pacifico", cursive;
+$background_color: #313537;//#294e57;//#263238; // #dfd5ca;
+
+$accent_color: #009688;
+$accent_color_2: $accent_color;
+$divider_color: #8d4365;
+$divider_color_light: lighten($background_color, 15%);
+
+$text_color_normal: lighten($background_color, 50%);
+$text_color_strong: lighten($text_color_normal, 30%);
+$text_color_light: darken($text_color_normal, 30%);
+$text_color_extra_light: darken($text_color_light, 30%);
+
+$sidebar_color: #52656f;//#3e6c77;
+$sidebar_text_color: lighten($sidebar_color, 50%);
+$sidebar_color_strong: lighten($sidebar_text_color, 30%);
+$sidebar_color_light: darken($sidebar_text_color, 30%);
+
+@import "base";
