@@ -3,7 +3,7 @@ import HTMLNode from "./html-node";
 import HTMLValueNode from "./html-value-node";
 import MeasureNode from "./measure-node";
 
-export default class StepNode {
+export default class StepNode implements HTMLValueNode {
     blockNodes: HTMLValueNode[];
     durationNode: MeasureNode;
 
@@ -15,7 +15,7 @@ export default class StepNode {
     getValue() {
         return {
             html: new HTMLNode(this),
-            duration: this.durationNode ? this.durationNode.getValue() : null
+            duration: this.durationNode?.getValue() ?? null
         }
     }
 

@@ -20,11 +20,11 @@ class StateObject {
 
 class Route {
     test: RegExp;
-    handler: (state: StateObject, ...params: string[]) => Observable<PageView>;
+    handler: (state: StateObject, ...params: string[]) => Observable<PageView<any>>;
 }
 
 export default class App extends HTMLElement {
-    genericRoute<T extends PageView>(element: string, title?: string): Observable<T> {
+    genericRoute<T extends PageView<any>>(element: string, title?: string): Observable<T> {
         const view = (document.createElement(element) as T);
         const o = new BehaviorSubject(view);
         return o.pipe(

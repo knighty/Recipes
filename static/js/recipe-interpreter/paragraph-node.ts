@@ -4,12 +4,12 @@ import HTMLNode from "./html-node";
 import HTMLValueNode from "./html-value-node";
 
 export default class ParagraphNode implements HTMLValueNode {
-    nodes: FormattedStringNode[];
+    node: FormattedStringNode;
     optional: boolean;
     tip: boolean;
 
-    constructor(nodes: FormattedStringNode[], optional: boolean, tip: boolean) {
-        this.nodes = nodes;
+    constructor(node: FormattedStringNode, optional: boolean, tip: boolean) {
+        this.node = node;
         this.optional = optional;
         this.tip = tip;
     }
@@ -24,6 +24,6 @@ export default class ParagraphNode implements HTMLValueNode {
             classes.push("optional");
         if (this.tip)
             classes.push("tip");
-        return context.paragraph(this.nodes.map(node => node.getHTML(context)).join(""), classes);
+        return context.paragraph(this.node.getHTML(context), classes);
     }
 }

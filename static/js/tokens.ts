@@ -50,4 +50,18 @@ export default class Tokens {
     done() {
         return this.i > this.tokens.length - 1;
     }
+
+    scope<T>(fn: (tokens: Tokens, consume: () => void) => T) {
+        const wrapper = new Tokens();
+        wrapper.tokens = this.tokens;
+        wrapper.i = this.i;
+        const consume = () => {
+            this.i = wrapper.i;
+        };
+        const r = fn(wrapper, consume);
+        if (r !== null) {
+            consume();
+        }
+        return r;
+    }
 }

@@ -1,10 +1,10 @@
-import { ReplaySubject, BehaviorSubject, Subject, combineLatest, combineLatestWith, fromEvent, map, merge, startWith, switchMap, takeUntil, tap, filter } from "rxjs";
+import { ReplaySubject, BehaviorSubject, Subject, combineLatest, combineLatestWith, map, merge, startWith, switchMap, takeUntil, tap } from "rxjs";
 import { debounceAfterFirst, observeInput, orderedGroupArray } from "../utils";
 import PageView from "./page";
 import RecipeRepository from "../recipe-repository";
 import { Recipe } from "../recipe";
 
-export default class RecipeCatalogueView extends PageView {
+export default class RecipeCatalogueView extends PageView<{}> {
     selectRecipe$ = new ReplaySubject(1);
     grouping$ = new BehaviorSubject("meat");
     search$ = new BehaviorSubject("");
@@ -139,11 +139,5 @@ export default class RecipeCatalogueView extends PageView {
 
         this.appendChild(filterElement);
         this.appendChild(recipesList);
-
-        fromEvent<MouseEvent>(this, "click").pipe(
-            map(e => (e.target as HTMLElement).dataset.recipe),
-            filter(recipe => recipe != ""),
-            takeUntil(this.disconnected$),
-        ).subscribe(recipe => this.selectRecipe$.next(recipe));
     }
 }

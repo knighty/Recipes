@@ -8,7 +8,10 @@ import PageView from "./page";
 import { ReplaySubject, switchMap, Observable, map, fromEvent, tap, merge, withLatestFrom, startWith, takeUntil, filter } from "rxjs";
 import { Recipe } from "../recipe";
 
-export default class RecipeView extends PageView {
+export default class RecipeView extends PageView<{
+    ingredients: HTMLDivElement,
+    steps: HTMLElement
+}> {
     disconnected$ = new ReplaySubject<void>(1);
 
     constructor() {
@@ -52,10 +55,10 @@ export default class RecipeView extends PageView {
             <main>
                 <h1>${recipe.name} <button class="button" name="back">Back</button></h1>
                 <ul class="meta">
-                    ${recipe.duration ? `<li><img src="${images.icons.duration}"></img><span>${recipe.duration.min / 60} mins</span></li>` : ``} 
-                    <li><img src="${images.icons.servings}"></img><span>Serves ${recipe.serves}</span></li>
-                    ${recipe.meat ? `<li><img src="${this.meatToImage(recipe)}"></img><span>${recipe.meat}</span></li>` : ``} 
-                    ${recipe.intensity && recipe.intensity > 0 ? `<li><img src="${images.icons.spicy}"></img><span>${this.spicyToText(recipe)}</span></li>` : ``}
+                    ${recipe.duration ? `<li><img alt="Duration" src="${images.icons.duration}"></img><span>${recipe.duration.min / 60} mins</span></li>` : ``} 
+                    <li><img alt="Servings" src="${images.icons.servings}"></img><span>Serves ${recipe.serves}</span></li>
+                    ${recipe.meat ? `<li><img alt="Icon: ${recipe.meat}" src="${this.meatToImage(recipe)}"></img><span>${recipe.meat}</span></li>` : ``} 
+                    ${recipe.intensity && recipe.intensity > 0 ? `<li><img alt="Spicy" src="${images.icons.spicy}"></img><span>${this.spicyToText(recipe)}</span></li>` : ``}
                 </ul>
                 ${recipe.description ? `<div class="description">${recipe.description.getHTML(htmlContext)}</div>` : ``}
                 <div class="steps" data-element="steps"></div>
@@ -68,15 +71,10 @@ export default class RecipeView extends PageView {
             </aside>
         `;
         //<li><img src="images/calories-coloured.png"></img><span>~${recipe.calories}kcal</span></li>
-        const elements = {
-            ingredients: this.querySelector<HTMLElement>(`[data-element="ingredients"]`),
-            steps: this.querySelector<HTMLElement>(`[data-element="steps"]`),
-        };
-
         //observeMouseMove(elements.ingredients).pipe(operators.tap(console.log)).subscribe();
 
         // Steps
-        this.element<HTMLElement>("steps").innerHTML = recipe.steps.map((step, index) => {
+        this.element("steps").innerHTML = recipe.steps.map((step, index) => {
             return `<section data-text="${step.html.getHTML(plainTextContext)}">
                 <div class="duration"${step.duration ? ` data-timer="${step.duration.min}"` : ``}>${step.duration ? `<span data-num="${step.duration.min / 60}" data-units="min${step.duration.min > 1 ? `s` : ``}"></span>` : ``}</div>
                 <div class="text">
@@ -88,7 +86,7 @@ export default class RecipeView extends PageView {
         const ingredientContext = new HTMLContext();
 
         // Ingredients
-        elements.ingredients.innerHTML = Object.entries(
+        this.element("ingredients").innerHTML = Object.entries(
             groupArray(recipe.ingredients, ingredient => ingredient.category)
         ).map(([group, items]) => `
             ${group != "-" ? `<h2>${group}</h2>` : ``}
@@ -118,8 +116,8 @@ export default class RecipeView extends PageView {
             )
         }
 
-        const readStep$ = observeScopedEvent<MouseEvent>(
-            this.querySelector(".steps"), "click", "section",
+        const readStep$ = observeScopedEvent(
+            this.element("steps"), "click", "section",
             { filterEvents: e => (e.target as HTMLElement).tagName != "A" }
         ).pipe(
             pluckEventTarget(),
@@ -127,7 +125,7 @@ export default class RecipeView extends PageView {
         );
 
         const clickDeselect$ = fromEvent(this.querySelector("[name=deselect]"), "click").pipe(
-            tap(() => [...elements.ingredients.querySelectorAll("input")].filter(c => c.checked).forEach(c => c.checked = false)),
+            tap(() => [...this.element("ingredients").querySelectorAll("input")].filter(c => c.checked).forEach(c => c.checked = false)),
         );
 
         merge(
@@ -143,8 +141,8 @@ export default class RecipeView extends PageView {
                 tap(previousIsCatalogue => previousIsCatalogue ? history.back() : goToPage$.next(["/", {}]))
             ),
 
-            merge(clickDeselect$, observeScopedEvent(elements.ingredients, "input", "input")).pipe(
-                map(e => [...elements.ingredients.querySelectorAll("input")].reduce((a, c) => c.checked || a, false)),
+            merge(clickDeselect$, observeScopedEvent(this.element("ingredients"), "input", "input")).pipe(
+                map(e => [...this.element("ingredients").querySelectorAll("input")].reduce((a, c) => c.checked || a, false)),
                 startWith(false),
                 tap(anyChecked => this.querySelector("[name=deselect]").classList.toggle("hidden", !anyChecked))
             )

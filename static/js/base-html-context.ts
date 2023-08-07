@@ -1,5 +1,6 @@
 import Measure from "./measure";
 import FormattedStringNode from "./recipe-interpreter/formatted-string-node";
+import { TableNode } from "./recipe-interpreter/table-node";
 
 export default interface BaseHTMLContext {
 
@@ -14,4 +15,6 @@ export default interface BaseHTMLContext {
     list(elements: string[], ordered: boolean): string;
 
     link(url: string, text?: FormattedStringNode, title?: string): string;
+
+    table(table: TableNode) : string;
 }

@@ -22,6 +22,9 @@ $sidebar_text_color: #d7ccc8 !default;
 $sidebar_color_strong: lighten($sidebar_text_color, 30%) !default;
 $sidebar_color_light: darken($sidebar_text_color, 30%) !default;
 
+$table_border_color: #ccc !default;
+$table_outline_color: #f8f8f8 !default;
+
 @import "clear";
 
 html {
@@ -47,6 +50,9 @@ html {
     --radius-medium: 0.5rem;
     --radius-small: calc(var(--radius-medium) * 0.6);
     --radius-large: calc(var(--radius-medium) * 1.5);
+
+    --table-border-color: #{$table_border_color};
+    --table-outline-color: #{$table_outline_color};
 
     --base-font-size: 11pt;
 

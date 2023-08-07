@@ -1,3 +1,9 @@
+
+/*
+Chicken Korma
+By: Graeme
+Date:
+*/
 -- Info
 name: Chicken Korma
 meat: Chicken
@@ -31,7 +37,11 @@ image: https://carameltintedlife.com/wp-content/uploads/2020/11/Chicken-Korma-1-
 -- Steps
 [10 minutes]
 Cut each [chicken breast] into small chunks (roughly 2.5cm) and season generously with [freshly ground black pepper].
-Dice the [onion] or cut into rings if blending later. [Link to resource!](recipe://lasagne)
+Dice the [onion] or cut into rings if blending later.
+| Consumable    | Effect    | Description   |
+| :---:         | :---      | :---          |
+| Ambit Ember   | Slightly increases Evade Window and Evade Speed by 15%. Lasts 60s. | The Astropaths call this "ambit ember." When consumed, it openes their senses to a kind of current in space, spectral energies that--they claim--lead to and originate from a single point of origin. Alepsis-Taura. |
+| Antidote      | Removes CORRODED effect and increases ACID resistance by 15%. Lasts 10m. | The liquid is contained in a small dropper, easily accessible during combat, and has a bitter taste that lingers in the mouth for a short while after consumption. |
 
 [5 minutes]
 Heat [1 tbsp oil] in a large nonstick frying pan or wok and fry the chicken over a medium high heat for 5-6 mins, turning occassionally.

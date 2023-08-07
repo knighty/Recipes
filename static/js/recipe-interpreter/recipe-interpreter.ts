@@ -17,19 +17,22 @@ import Measure from "../measure";
 import StringNode from "./string-node";
 import FormattedStringFragment from "./formatted-string-fragment";
 import measures from "./measure-definitions";
-import { NumericDictionary } from "../types";
 import ListNode from "./list-node";
 import LinkNode from "./link-node";
+import { TableColumn, TableNode } from "./table-node";
+import { Recipe } from "../recipe";
 
 enum TokenType {
     openBrace,
     closeBrace,
     openParenthesis,
     closeParenthesis,
+    tableDivider,
     section,
     bullet,
     hash,
     comma,
+    pipe,
     duration,
     linebreak,
     optional,
@@ -48,6 +51,10 @@ export class RecipeInterpreter {
     constructor() {
         const tokenizer = new Tokenizer();
 
+        tokenizer.addRule(/\/\/.*/y, (context) => false);
+
+        tokenizer.addRule(/\/\*[\s\S]*\*\//y, (context) => false);
+
         tokenizer.addRule(/\[/y, (context) => context.accept(TokenType.openBrace));
 
         tokenizer.addRule(/\]/y, (context) => context.accept(TokenType.closeBrace));
@@ -56,11 +63,26 @@ export class RecipeInterpreter {
 
         tokenizer.addRule(/\)/y, (context) => context.accept(TokenType.closeParenthesis));
 
+        tokenizer.addRule(/:?-{3,}:?/y, (context, matches) => {
+            const start = matches[0].startsWith(":");
+            const end = matches[0].endsWith(":");
+            let align = "left";
+            if (start && end) {
+                align = "center";
+            }
+            else if (end) {
+                align = "right";
+            }
+            context.accept(TokenType.tableDivider, { align });
+        });
+
         tokenizer.addRule(/--/y, (context) => context.accept(TokenType.section));
 
         tokenizer.addRule(/-/y, (context) => context.accept(TokenType.bullet));
 
         tokenizer.addRule(/\,/y, (context) => context.accept(TokenType.comma));
+
+        tokenizer.addRule(/\|/y, (context) => context.accept(TokenType.pipe));
 
         tokenizer.addRule(/(\r\n|\r|\n)/y, (context) => context.accept(TokenType.linebreak));
 
@@ -224,16 +246,14 @@ export class RecipeInterpreter {
         const stepNodes = [];
         while (true) {
             const stepNode = this.stepExpression(tokens);
-            if (stepNode !== false) {
+            if (stepNode) {
                 stepNodes.push(stepNode);
                 this.skipAll(tokens);
                 continue;
             }
 
-            break;
+            return new StepsNode(stepNodes);
         }
-
-        return new StepsNode(stepNodes);
     }
 
     infoSectionExpression(tokens: Tokens) {
@@ -253,7 +273,7 @@ export class RecipeInterpreter {
         if (tokens.peek(TokenType.key)) {
             const keyToken = tokens.next();
             this.skipAll(tokens);
-            const f = (key: string, tokens: Tokens): InfoNode<any> => {
+            const f = (key: keyof Recipe, tokens: Tokens): InfoNode<any> => {
                 switch (key) {
                     case "description": return new InfoNode(key, this.paragraphExpression(tokens).getValue());
                     case "tags": return new InfoNode(key, this.tagsExpression(tokens).getValue());
@@ -329,26 +349,135 @@ export class RecipeInterpreter {
                 continue;
             }
 
-            const listExpression = this.unorderedListExpression(tokens);
-            if (listExpression) {
-                nodes.push(listExpression);
-                continue;
-            }
-
-            const paragraphExpression = this.paragraphExpression(tokens);
-            if (paragraphExpression) {
-                nodes.push(paragraphExpression);
-                if (tokens.peek(TokenType.linebreak)) {
-                    tokens.next();
-                }
+            const blockExpression = this.blockExpression(tokens);
+            if (blockExpression) {
+                nodes.push(blockExpression);
                 continue;
             }
 
             if (nodes.length == 0)
-                return false;
+                return null;
             return new StepNode(nodes, durationNode);
         }
+    }
 
+    blockExpression(tokens: Tokens) {
+        return this.tableExpression(tokens) ??
+            this.unorderedListExpression(tokens) ??
+            this.orderedListExpression(tokens) ??
+            this.paragraphExpression(tokens);
+    }
+
+    tableExpression(tokens: Tokens) {
+        const rows = [];
+        let columns: TableColumn[] = null;
+        const firstRowExpression = this.tableRowExpression(tokens);
+        if (firstRowExpression) {
+            tokens.nextPeek(TokenType.linebreak);
+        }
+        const dividerRowExpression = this.tableDividerRowExpression(tokens);
+        if (dividerRowExpression) {
+            tokens.nextPeek(TokenType.linebreak);
+            columns = firstRowExpression.map((column, i) => [column, dividerRowExpression[i]])
+        }
+
+        while (true) {
+            const tableRowExpression = this.tableRowExpression(tokens);
+            if (tableRowExpression) {
+                tokens.nextPeek(TokenType.linebreak);
+                rows.push(tableRowExpression);
+                continue;
+            }
+            if (firstRowExpression == null)
+                return null;
+            return new TableNode(columns ? rows : [firstRowExpression, ...rows], columns);
+        }
+    }
+
+    tableDividerRowExpression(tokens: Tokens) {
+        return tokens.scope((tokens, consume) => {
+            if (tokens.peek(TokenType.pipe)) {
+                tokens.next();
+                const dividers = [];
+                while (true) {
+                    this.skipWhitespace(tokens);
+
+                    const divider = this.tableDividerExpression(tokens);
+                    if (divider) {
+                        this.skipWhitespace(tokens);
+                        dividers.push(divider);
+                        tokens.nextPeek(TokenType.pipe);
+                        continue;
+                    }
+
+                    return dividers.length > 0 ? dividers : null;
+                }
+            }
+
+            return null;
+        })
+    }
+
+    tableRowExpression(tokens: Tokens) {
+        return tokens.scope((tokens, consume) => {
+            if (tokens.peek(TokenType.pipe)) {
+                tokens.next();
+                const columns = [];
+                while (true) {
+                    this.skipWhitespace(tokens);
+
+                    const column = this.formattedStringExpression(tokens);
+                    if (column) {
+                        this.skipWhitespace(tokens);
+                        columns.push(column);
+                        tokens.nextPeek(TokenType.pipe);
+                        continue;
+                    }
+
+                    return columns.length > 0 ? columns : null;
+                }
+            }
+
+            return null;
+        })
+        /*if (tokens.peek(TokenType.pipe)) {
+            tokens.next();
+            let type = "data";
+            const columns = [];
+            const dividers = [];
+            while (true) {
+                this.skipWhitespace(tokens);
+
+                const divider = this.tableDividerExpression(tokens);
+                if (divider) {
+                    this.skipWhitespace(tokens);
+                    dividers.push(divider);
+                    tokens.nextPeek(TokenType.pipe);
+                    type = "dividers";
+                    continue;
+                }
+
+                const column = this.formattedStringExpression(tokens);
+                if (column) {
+                    this.skipWhitespace(tokens);
+                    columns.push(column);
+                    tokens.nextPeek(TokenType.pipe);
+                    type = "data";
+                    continue;
+                }
+
+                return columns.length > 0 ? { columns, type } : null;
+            }
+        }
+
+        return null;*/
+    }
+
+    tableDividerExpression(tokens: Tokens) {
+        if (tokens.peek(TokenType.tableDivider)) {
+            const token = tokens.next();
+            return { align: token.align };
+        }
     }
 
     tipExpression(tokens: Tokens) {
@@ -385,7 +514,7 @@ export class RecipeInterpreter {
             }
 
             if (elements.length == 0)
-                return this.orderedListExpression(tokens);
+                return null;
 
             return new ListNode(elements, false);
         }
@@ -422,7 +551,6 @@ export class RecipeInterpreter {
 
     orderedListElementExpression(tokens: Tokens) {
         if (tokens.peek(TokenType.orderedBullet)) {
-            console.log("grg");
             tokens.next();
             const formattedStringExpression = this.formattedStringExpression(tokens);
             if (tokens.nextPeek(TokenType.linebreak)) {
@@ -434,33 +562,21 @@ export class RecipeInterpreter {
     }
 
     paragraphExpression(tokens: Tokens) {
-        let tip = false;
-        let optional = false;
-        const formattedStringNodes: FormattedStringNode[] = [];
-        while (true) {
-            const tipExpression = this.tipExpression(tokens);
-            if (tipExpression !== false) {
-                tip = true;
-                continue;
-            }
+        const tipExpression = this.tipExpression(tokens);
+        const tip = tipExpression !== false;
 
-            const formattedSentenceExpression = this.formattedStringExpression(tokens);
-            if (formattedSentenceExpression) {
-                formattedStringNodes.push(formattedSentenceExpression);
-                continue;
-            }
+        const formattedStringExpression = this.formattedStringExpression(tokens);
+        if (formattedStringExpression == null)
+            return null;
 
-            const optionalExpression = this.optionalExpression(tokens);
-            if (optionalExpression !== false) {
-                optional = true;
-                continue;
-            }
+        const optionalExpression = this.optionalExpression(tokens);
+        const optional = optionalExpression !== false;
 
-            if (formattedStringNodes.length == 0)
-                return null;
-
-            return new ParagraphNode(formattedStringNodes, optional, tip);
+        if (tokens.peek(TokenType.linebreak)) {
+            tokens.next();
         }
+
+        return new ParagraphNode(formattedStringExpression, optional, tip);
     }
 
     formattedStringExpression(tokens: Tokens): FormattedStringNode {
@@ -540,7 +656,7 @@ export class RecipeInterpreter {
     basicStringExpression(tokens: Tokens): StringNode {
         const fragments: string[] = [];
         while (true) {
-            const stringFragmentExpression = this.wordExpression(tokens);
+            const stringFragmentExpression = this.basicStringFragmentExpression(tokens);
             if (stringFragmentExpression !== null) {
                 fragments.push(stringFragmentExpression);
                 continue;
@@ -556,33 +672,19 @@ export class RecipeInterpreter {
         if (tokens.peek(TokenType.measure)) {
             return tokens.next().word;
         }
-        return this.wordExpression(tokens);
+        return this.basicStringFragmentExpression(tokens);
     }
 
-    wordExpression(tokens: Tokens): string {
+    basicStringFragmentExpression(tokens: Tokens) {
         if (tokens.peek(TokenType.word)) {
             return tokens.next().word;
         }
-        return this.whitespaceExpression(tokens);
-    }
-
-    whitespaceExpression(tokens: Tokens): string {
         if (tokens.peek(TokenType.whitespace)) {
-            const token = tokens.next();
-            return token.whitespace;
+            return tokens.next().whitespace;
         }
-        return this.numberWordExpression(tokens);
-    }
-
-    numberWordExpression(tokens: Tokens): string {
         if (tokens.peek(TokenType.number)) {
-            const token = tokens.next();
-            return token.word;
+            return tokens.next().word;
         }
-        return this.parenthesisExpression(tokens);
-    }
-
-    parenthesisExpression(tokens: Tokens): string {
         if (tokens.peek(TokenType.bullet)) {
             tokens.next();
             return "-";
@@ -591,12 +693,10 @@ export class RecipeInterpreter {
             return tokens.next().string;
         }
         if (tokens.peek(TokenType.key)) {
-            const key = tokens.next();
-            return key.word;
+            return tokens.next().word;
         }
         if (tokens.peek(TokenType.url)) {
-            const key = tokens.next();
-            return key.string;
+            return tokens.next().string;
         }
         if (tokens.peek(TokenType.openParenthesis)) {
             tokens.next();
@@ -610,6 +710,10 @@ export class RecipeInterpreter {
             tokens.next();
             return ",";
         }
+        /*if (tokens.peek(TokenType.pipe)) {
+            tokens.next();
+            return "|";
+        }*/
         return null;
     }
 

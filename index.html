@@ -1,91 +1,95 @@
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link id="stylesheet" rel="stylesheet" href="/dist/style.css" />
-    <meta name="theme-color" content="#513429">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link id="stylesheet" rel="stylesheet" href="/dist/style.css" />
+        <meta name="theme-color" content="#513429">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Coming+Soon&family=Pacifico&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Coming+Soon&family=Pacifico&display=swap" rel="stylesheet">
 
-    <script src="/dist/main.js" type="module"></script>
-    <script type="text/javascript">
-        // Icons
-        // https://www.flaticon.com/authors/freepik
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
-</head>
+        <script src="/dist/main.js" type="module"></script>
+        <script type="text/javascript">
+            // Icons
+            // https://www.flaticon.com/authors/freepik
+        </script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
+    </head>
 
-<body>
-    <x-app>
-        <x-toolbar></x-toolbar>
-        <x-settings>
-            <dialog>
-                <header>
-                    Settings<button name="close">X</button>
-                </header>
-                <article>
-                    <label>
-                        <span>Theme</span>
-                        <select name="theme">
-                            <option value="default">Default</option>
-                            <option value="simple">Simple</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        Voice
-                        <select name="voice"></select>
-                    </label>
-
-                    <label>
-                        <span>Font Size</span>
-                        <input name="font-size" type="range" value="11" min="8" max="16" data-config="fontSize" data-default="11" />
-                        <input type="numeric" data-config="fontSize" value="11" data-default="11" disabled />
-                    </label>
-
-                    <label>
-                        Auto Start Timers
-                        <label class="checkbox">
-                            <input type="checkbox" data-config="autoStartTimer" data-default="true" />
+    <body>
+        <x-app>
+            <x-toolbar></x-toolbar>
+            <x-settings>
+                <dialog>
+                    <header>
+                        Settings<button name="close">X</button>
+                    </header>
+                    <article>
+                        <label>
+                            <span>Theme</span>
+                            <select name="theme">
+                                <option value="default">Default</option>
+                                <option value="simple">Simple</option>
+                            </select>
                         </label>
-                    </label>
 
-                    <label>
-                        Weights
-                        <label class="checkbox" data-text-on="Metric (kg)" data-text-off="Imperial (lb)">
-                            <input type="checkbox" data-config="measureUnits" data-default="true" />
+                        <label>
+                            Voice
+                            <select name="voice"></select>
                         </label>
-                    </label>
 
-                    <label>
-                        Lengths
-                        <label class="checkbox" data-text-on="Metric (m)" data-text-off="Imperial (in)">
-                            <input type="checkbox" data-config="measureUnits" data-default="true" />
+                        <label>
+                            <span>Font Size</span>
+                            <input name="font-size" type="range" value="11" min="8" max="16" data-config="fontSize" data-default="11" />
+                            <input type="numeric" data-config="fontSize" value="11" data-default="11" disabled />
                         </label>
-                    </label>
 
-                    <label>
-                        Temperature
-                        <label class="checkbox" data-text-on="Metric (C)" data-text-off="Imperial (F)">
-                            <input type="checkbox" data-config="measureUnits" data-default="true" />
+                        <label>
+                            Auto Start Timers
+                            <label class="checkbox">
+                                <input type="checkbox" data-config="autoStartTimer" data-default="true" />
+                            </label>
                         </label>
-                    </label>
 
-                    <label>
-                        Volume
-                        <label class="checkbox" data-text-on="Metric (l)" data-text-off="Imperial (oz)">
-                            <input type="checkbox" data-config="measureUnits" data-default="true" />
+                        <label>
+                            Weights
+                            <label class="checkbox" data-text-on="Metric (kg)" data-text-off="Imperial (lb)">
+                                <input type="checkbox" data-config="measureUnits" data-default="true" />
+                            </label>
                         </label>
-                    </label>
 
-                    <label>
-                        Sources
-                        <textarea name="sources"></textarea>
-                    </label>
-                </article>
-            </dialog>
-        </x-settings>
-    </x-app>
-    <div class="bleed"></div>
-</body>
+                        <label>
+                            Lengths
+                            <label class="checkbox" data-text-on="Metric (m)" data-text-off="Imperial (in)">
+                                <input type="checkbox" data-config="measureUnits" data-default="true" />
+                            </label>
+                        </label>
+
+                        <label>
+                            Temperature
+                            <label class="checkbox" data-text-on="Metric (C)" data-text-off="Imperial (F)">
+                                <input type="checkbox" data-config="measureUnits" data-default="true" />
+                            </label>
+                        </label>
+
+                        <label>
+                            Volume
+                            <label class="checkbox" data-text-on="Metric (l)" data-text-off="Imperial (oz)">
+                                <input type="checkbox" data-config="measureUnits" data-default="true" />
+                            </label>
+                        </label>
+
+                        <label>
+                            Sources
+                            <textarea name="sources"></textarea>
+                        </label>
+                    </article>
+                </dialog>
+            </x-settings>
+        </x-app>
+        <div class="bleed"></div>
+    </body>
+</html>

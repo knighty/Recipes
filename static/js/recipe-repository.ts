@@ -18,11 +18,11 @@ export default class RecipeRepository {
 
         let i = 0;
         const sources$ = from(config.sources).pipe(
-            mergeMap(source => ajax({
+            mergeMap(source => ajax<string>({
                 url: source,
                 responseType: 'text'
             })),//.pipe(delay(i++ * 3000))),
-            map(response => response.response as string),
+            map(response => response.response),
             map(text => text.split(/\-{5}/))
         );
 

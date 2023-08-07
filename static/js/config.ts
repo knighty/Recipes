@@ -1,5 +1,6 @@
 import { Observable, Subject, distinctUntilChanged, filter, fromEvent, map, mapTo, shareReplay, startWith, switchMap, tap } from "rxjs";
 import { AnyDictionary } from "./types";
+import { fromDomEvent } from "./utils";
 
 export const config = {
     sources: [
@@ -16,7 +17,7 @@ setConfigValue$.pipe(
     map((v: SetConfigTuple) => "hello")
 )
 
-const localStorageUpdated$ = fromEvent<StorageEvent>(window, "storage").pipe(
+const localStorageUpdated$ = fromDomEvent(window, "storage").pipe(
     filter(e => e.key == "config")
 );
 

@@ -2,10 +2,11 @@ import BaseHTMLContext from "./base-html-context";
 import Measure from "./measure";
 import MeasureRenderer from "./measure-renderer";
 import FormattedStringNode from "./recipe-interpreter/formatted-string-node";
+import { TableNode } from "./recipe-interpreter/table-node";
 import { escapeHtml } from "./utils";
 
 export default class PlainTextContext implements BaseHTMLContext {
-    measureRenderer = new MeasureRenderer({html: false});
+    measureRenderer = new MeasureRenderer({ html: false });
 
     text(text: string): string {
         return escapeHtml(text);
@@ -29,5 +30,9 @@ export default class PlainTextContext implements BaseHTMLContext {
 
     link(url: string, text?: FormattedStringNode, title?: string): string {
         return `${text ? text.getHTML(this) : ""}`;
+    }
+
+    table(table: TableNode): string {
+        return "";
     }
 }

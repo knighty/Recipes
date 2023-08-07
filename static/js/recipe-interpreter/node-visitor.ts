@@ -23,8 +23,9 @@ export default class NodeVisitor {
         this.recipe.steps.push(step);
     }
 
-    setInfo<T>(key: keyof Recipe, value: T) {
-        switch (key) {
+    setInfo<K extends keyof Recipe>(key: K, value: Recipe[K]) {
+        this.recipe[key] = value;
+        /*switch (key) {
             case "id": this.recipe.id = value as string; break;
             case "name": this.recipe.name = value as string; break;
             case "meat": this.recipe.meat = value as string; break;
@@ -36,6 +37,8 @@ export default class NodeVisitor {
             case "image": this.recipe.image = value as string; break;
             case "description": this.recipe.description = value as HTMLNode; break;
             case "intensity": this.recipe.intensity = value as number; break;
-        }
+        }*/
+
+        //this.setInfo("calories")
     }
 }
